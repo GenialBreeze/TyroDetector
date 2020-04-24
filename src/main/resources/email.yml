@@ -1,0 +1,18 @@
+ssl: true
+tls: false
+#收件人邮箱
+receiver:
+  - "example@exam.com"
+  - "example1@exam.com"
+#发送邮件主机名
+hostname: smtp.qq.com
+#SMTP Port
+port: 465
+#发件人邮箱
+sender: exam@qq.com
+#密码
+password: asdfghjkl123456
+#紧急邮件玩家操作阈值 (操作数)
+age: 3
+#普通邮件周期 (分钟)
+time: 5

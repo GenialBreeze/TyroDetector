@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2fa653de-378a-4a81-a11e-e4e078724a65" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="JUnit4 Test Class" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="1.8" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZnSGvhHHqtHWQ7nc3ruP3mQjPX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15083334" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.gbcraft.tirodetector" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Study\JavaWorkarea\MinecraftPlugn\TiroDetector\src\main\resources" />
+      <recent name="E:\Study\JavaWorkarea\MinecraftPlugn\TiroDetector\src" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Study\JavaWorkarea\MinecraftPlugn\TiroDetector\src" />
+      <recent name="E:\Study\JavaWorkarea\MinecraftPlugn\TiroDetector\libraries" />
+      <recent name="E:\Study\JavaWorkarea\MinecraftPlugn\TiroDetector" />
+      <recent name="E:\Study\JavaWorkarea\MinecraftPlugn\TiroDetector\src\main\java\org\gbcraft" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.TyroDetectorTest.test">
+    <configuration name="TyroDetectorTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TyroDetector" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.gbcraft.tyrodetector.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.gbcraft.tyrodetector" />
+      <option name="MAIN_CLASS_NAME" value="org.gbcraft.tyrodetector.TyroDetectorTest" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TiroDetector build" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.TyroDetectorTest.test" />
+      <item itemvalue="Maven.TiroDetector build" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TyroDetectorTest.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2fa653de-378a-4a81-a11e-e4e078724a65" name="Default Changelist" comment="" />
+      <created>1585473272420</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585473272420</updated>
+      <workItem from="1585473275261" duration="7698000" />
+      <workItem from="1585482579689" duration="6763000" />
+      <workItem from="1585531935790" duration="1383000" />
+      <workItem from="1585554115328" duration="1326000" />
+      <workItem from="1585615339307" duration="7455000" />
+      <workItem from="1585639999038" duration="75000" />
+      <workItem from="1585640134051" duration="1389000" />
+      <workItem from="1585641527240" duration="317000" />
+      <workItem from="1585641846342" duration="136000" />
+      <workItem from="1585641984523" duration="307000" />
+      <workItem from="1585642294101" duration="29183000" />
+      <workItem from="1585824955793" duration="20730000" />
+      <workItem from="1585916553318" duration="13256000" />
+      <workItem from="1585987590365" duration="14593000" />
+      <workItem from="1586072726647" duration="1079000" />
+      <workItem from="1586076243930" duration="4643000" />
+      <workItem from="1586171875790" duration="1815000" />
+      <workItem from="1586176454201" duration="48000" />
+      <workItem from="1586178777751" duration="1015000" />
+      <workItem from="1586180500942" duration="184000" />
+      <workItem from="1586264149268" duration="542000" />
+      <workItem from="1586306685978" duration="398000" />
+      <workItem from="1586309310098" duration="605000" />
+      <workItem from="1586317376130" duration="602000" />
+      <workItem from="1586318196991" duration="1252000" />
+      <workItem from="1586354040751" duration="18027000" />
+      <workItem from="1586496299708" duration="6562000" />
+      <workItem from="1586521785497" duration="1398000" />
+      <workItem from="1586684806159" duration="11000" />
+      <workItem from="1586705342348" duration="1920000" />
+      <workItem from="1587360137447" duration="126000" />
+      <workItem from="1587360719275" duration="4503000" />
+      <workItem from="1587365681421" duration="1139000" />
+      <workItem from="1587366831790" duration="1088000" />
+      <workItem from="1587529937361" duration="7911000" />
+      <workItem from="1587537869006" duration="1146000" />
+      <workItem from="1587539309918" duration="3860000" />
+      <workItem from="1587717171971" duration="11974000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/TyroDetector" />
+    </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="387" y="63" key="#TiroDetector_[clean,package]" timestamp="1585792068470">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="387" y="63" key="#TiroDetector_[clean,package]/0.0.1536.824@0.0.1536.824" timestamp="1585792068470" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585642421573">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1585642421573" />
+    <state x="508" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586172651455">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="508" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1586172651455" />
+    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1587727174829">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1587727174829" />
+    <state x="388" y="90" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1587730808622">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="388" y="90" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1536.824@0.0.1536.824" timestamp="1587730808622" />
+    <state x="614" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585473284050">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="614" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1585473284050" />
+    <state x="358" y="337" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1585477295340">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="358" y="337" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1585477295340" />
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586356119337">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1586356119337" />
+    <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1585641598037">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="254" height="195" key="DatabaseViewActions_Filter/0.0.1536.824@0.0.1536.824" timestamp="1585641598037" />
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1586010199699">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1586010199699" />
+    <state x="477" y="153" key="FileChooserDialogImpl" timestamp="1586095109122">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="477" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586095109122" />
+    <state x="579" y="331" key="Github.CreateGistDialog" timestamp="1587730731379">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="579" y="331" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1587730731379" />
+    <state width="1493" height="212" key="GridCell.Tab.0.bottom" timestamp="1587730573906">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1587730573906" />
+    <state width="1493" height="212" key="GridCell.Tab.0.center" timestamp="1587730573906">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1587730573906" />
+    <state width="1493" height="212" key="GridCell.Tab.0.left" timestamp="1587730573906">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1587730573906" />
+    <state width="1493" height="212" key="GridCell.Tab.0.right" timestamp="1587730573906">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1587730573906" />
+    <state x="281" y="0" key="SettingsEditor" timestamp="1587731692000">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="281" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1587731692000" />
+    <state x="615" y="264" width="340" height="296" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1585622416882">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="615" y="264" width="340" height="296" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.824@0.0.1536.824" timestamp="1585622416882" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1586010120497">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1586010120497" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586521785110">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586521785110" />
+    <state x="540" y="114" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1585962305650">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="540" y="114" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1585962305650" />
+    <state x="300" y="133" key="new project wizard" timestamp="1586321000624">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="300" y="133" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1586321000624" />
+    <state x="677" y="467" width="672" height="677" key="run.anything.popup" timestamp="1585824504207">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="677" y="467" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1585824504207" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1585983413346">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1585983413346" />
+  </component>
+</project>
