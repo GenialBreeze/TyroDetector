@@ -9,9 +9,9 @@
 
 ### 使用
 
-下载最新的[release](https://github.com/IceBlues/TyroDetector/releases)版本
+插件依赖[Plan插件](https://www.spigotmc.org/resources/plan-player-analytics.32536/history)
 
-放入plugins文件夹
+下载最新的[release](https://github.com/IceBlues/TyroDetector/releases)版本，放入plugins文件夹
 
 ### 权限
 
