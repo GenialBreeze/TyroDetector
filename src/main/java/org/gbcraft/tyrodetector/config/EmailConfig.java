@@ -13,6 +13,7 @@ public class EmailConfig {
     private final Integer port;
     private final String sender;
     private final String password;
+    private final String servername;
     private final Integer age;
     private final Integer time;
 
@@ -24,6 +25,7 @@ public class EmailConfig {
         this.port = Integer.valueOf(ConfigReader.getEmailParam("port"));
         this.sender = ConfigReader.getEmailParam("sender");
         this.password = ConfigReader.getEmailParam("password");
+        this.servername = ConfigReader.getEmailParam("servername");
         this.age = Integer.valueOf(ConfigReader.getEmailParam("age"));
         this.time = Integer.valueOf(ConfigReader.getEmailParam("time"));
     }
@@ -54,6 +56,10 @@ public class EmailConfig {
 
     public Boolean isTls() {
         return tls;
+    }
+
+    public String getServername() {
+        return servername;
     }
 
     public Integer getAge() {

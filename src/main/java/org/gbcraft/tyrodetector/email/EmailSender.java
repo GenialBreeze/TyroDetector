@@ -3,6 +3,7 @@ package org.gbcraft.tyrodetector.email;
 import org.apache.commons.mail.SimpleEmail;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.config.EmailConfig;
+import plan.org.apache.commons.lang3.StringUtils;
 
 /**
  * 邮件发送者
@@ -29,6 +30,10 @@ public class EmailSender {
             email.setFrom(config.getSender());
             email.setAuthentication(config.getSender(), config.getPassword());
             // 邮件主题
+            String servername =  config.getServername();
+            if(StringUtils.isNotBlank(servername)) {
+                title = servername + " - " + title;
+            }
             email.setSubject(title);
             // 邮件内容
             email.setMsg(content);
