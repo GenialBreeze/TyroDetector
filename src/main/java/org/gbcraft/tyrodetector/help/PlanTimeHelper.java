@@ -18,11 +18,11 @@ public class PlanTimeHelper implements TimeHelper {
      */
     @Override
     public Long getPlayHours(UUID playerUUID) {
-        Long hours = 0L;
+        long hours = 0L;
 
         CommonQueries queries = QueryService.getInstance().getCommonQueries();
         Set<UUID> servers = queries.fetchServerUUIDs();
-        Long playtime = 0L;
+        long playtime = 0L;
 
         for (UUID uuid : servers) {
             playtime += queries.fetchPlaytime(playerUUID, uuid, 0, Long.MAX_VALUE);
@@ -41,7 +41,7 @@ public class PlanTimeHelper implements TimeHelper {
      */
     @Override
     public Long getPlayHours(String name) {
-        Long hours = null;
+        long hours = 0L;
 
         Player player = Bukkit.getPlayer(name);
         if (player != null) {
@@ -51,7 +51,7 @@ public class PlanTimeHelper implements TimeHelper {
 
 
             playerUUID = player.getUniqueId();
-            Long playtime = 0L;
+            long playtime = 0L;
 
             for (UUID uuid : servers) {
                 playtime += queries.fetchPlaytime(playerUUID, uuid, 0, Long.MAX_VALUE);
