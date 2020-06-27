@@ -1,0 +1,30 @@
+#新玩家监控时�? (小时)
+tyroHours: 10
+#存取物品监测列表 (名称:个数)
+itemMap:
+  GUNPOWDER: 12
+  DIAMOND: 10
+  IRON_INGOT: 64
+#破坏方块监测列表 (名称:个数)
+brokenMap:
+  COBBLESTONE: 10
+#破坏方块监测周期 (分钟)
+brokenCycle: 5
+
+#放置物品监测列表 (名称:个数)
+placeMap:
+  TNT: 5
+#放置物品监测周期 (分钟)
+placeCycle: 5
+
+#实体列表 (名称:斩杀�?)
+entityMap:
+  PLAYER: 1
+#实体死亡监测周期 (分钟)
+entityCycle: 5
+
+#白名单尝试松弛周�? (分钟)
+whiteCycle: 60
+
+#启用日志
+debug: false
