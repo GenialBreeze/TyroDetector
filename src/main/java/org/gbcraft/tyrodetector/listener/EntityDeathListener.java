@@ -28,19 +28,19 @@ public class EntityDeathListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityDeath(EntityDeathEvent event){
+    public void onEntityDeath(EntityDeathEvent event) {
         Entity deathEntity = event.getEntity();
         HumanEntity player = event.getEntity().getKiller();
-        if(null == player){
+        if (null == player) {
             return;
         }
 
-        if(!plugin.getTyroPlayers().containsKey(player.getUniqueId())){
+        if (!plugin.getTyroPlayers().containsKey(player.getUniqueId())) {
             return;
         }
         Integer limit = plugin.getDetectorConfig().getEntityMap().get(deathEntity.getType().name());
-        if(null != limit){
-            plugin.logToFile("[DEBUG]发现监测实体死亡 - "+player.getName());
+        if (null != limit) {
+            plugin.logToFile("[DEBUG]发现监测实体死亡 - " + player.getName());
 
             joinContainers(player, deathEntity, limit);
         }
@@ -51,20 +51,21 @@ public class EntityDeathListener implements Listener {
     private void joinContainers(HumanEntity player, Entity entity, Integer limit) {
         Map<Entity, Integer> playerEntities = containers.computeIfAbsent(player, k -> new HashMap<>());
         playerEntities.merge(entity, 1, Integer::sum);
-        if(playerEntities.get(entity) >= limit){
+        if (playerEntities.get(entity) >= limit) {
             plugin.logToFile("[DEBUG]实体死亡次数达到上限,邮件准备");
-            plugin.logToFile("[DEBUG]目标: "+player.getName() + " 实体类型: "+entity.getType().name());
-            String loc = "(X:"+player.getLocation().getBlockX()+",Z:"+player.getLocation().getBlockZ()+",Y:"+player.getLocation().getBlockY()+")";
+            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 实体类型: " + entity.getType().name());
+            String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
             String content = player.getWorld().getName() +
                     " 杀死 " + entity.getType().name() +
+                    " - " + entity.getName() +
                     " x" + playerEntities.get(entity) +
                     " " + new SimpleDateFormat("HH:mm").format(new Date())
-                    +" " + loc;
+                    + " " + loc;
             EmailManager.getManager().append(player, new EmailInfo(content));
         }
     }
 
-    private void releaseAll(){
+    private void releaseAll() {
         containers.forEach((k, v) -> containers.remove(k));
     }
 }
