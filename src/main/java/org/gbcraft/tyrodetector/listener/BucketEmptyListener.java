@@ -3,6 +3,7 @@ package org.gbcraft.tyrodetector.listener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
@@ -25,12 +26,19 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
 
     @EventHandler
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
+        Player player = event.getPlayer();
+
+        if(!plugin.getTyroPlayers().containsKey(player.getUniqueId())){
+            return;
+        }
+
         Material bucket = event.getBucket();
         Integer limit = plugin.getDetectorConfig().getLiquidMap().get(bucket.toString());
+
         if (null != limit) {
             plugin.logToFile("[DEBUG]发现需要监测的流体桶被放置 - " + event.getPlayer().getName());
 
-            joinContainers(event.getPlayer(), bucket, limit);
+            joinContainers(player, bucket, limit);
         }
     }
 

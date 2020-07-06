@@ -30,6 +30,11 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+
+        if(!plugin.getTyroPlayers().containsKey(player.getUniqueId())){
+            return;
+        }
+
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block clickedBlock = event.getClickedBlock();
             if (null != clickedBlock) {
@@ -43,7 +48,7 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
                             if (null != limit) {
                                 plugin.logToFile("[DEBUG]点燃火焰 - " + event.getPlayer().getName());
 
-                                joinContainers(event.getPlayer(), item.getType(), limit);
+                                joinContainers(player, item.getType(), limit);
                             }
                         }
                     }
