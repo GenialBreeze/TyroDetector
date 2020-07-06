@@ -1,9 +1,9 @@
 package org.gbcraft.tyrodetector.email;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.SimpleEmail;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.config.EmailConfig;
-import plan.org.apache.commons.lang3.StringUtils;
 
 /**
  * 邮件发送者

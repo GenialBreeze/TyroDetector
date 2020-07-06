@@ -1,6 +1,7 @@
 package org.gbcraft.tyrodetector;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -65,16 +66,21 @@ public final class TyroDetector extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BlockBreakListener(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(this), this);
         Bukkit.getPluginManager().registerEvents(new EntityDeathListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new BucketEmptyListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
 
         Bukkit.getPluginManager().registerEvents(new ConfigBoxListener(this), this);
 
         /*注册命令执行器*/
         TDCommandExecutor executor = new TDCommandExecutor(plugin);
-        Bukkit.getPluginCommand("tyro").setExecutor(executor);
-        Bukkit.getPluginCommand("tyro").setTabCompleter(executor);
+        PluginCommand tyro = Bukkit.getPluginCommand("tyro");
+        if (null != tyro) {
+            tyro.setExecutor(executor);
+            tyro.setTabCompleter(executor);
+        }
 
         cycleTaskInit();
-        this.getLogger().info("TyroDetector已准备好!");
+        this.getLogger().info("TyroDetector初始化完成!");
     }
 
     @Override
@@ -84,11 +90,12 @@ public final class TyroDetector extends JavaPlugin {
 
     BukkitTask emailCycleTask;
     BukkitTask whiteCycleTask;
+
     private void cycleTaskInit() {
         releaseCycle(emailCycleTask);
         releaseCycle(whiteCycleTask);
 
-        boolean cycle = true;
+        boolean cycle;
         /*启用邮件周期任务*/
         emailCycleTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, () -> {
             logToFile("[DEBUG]邮件周期日志准备中");

@@ -14,6 +14,10 @@ public class DetectorConfig {
     private final Map<String, Integer> placeMap;
     private final Integer entityCycle;
     private final Map<String, Integer> entityMap;
+    private final Integer liquidCycle;
+    private final Map<String, Integer> liquidMap;
+    private final Integer fireCycle;
+    private final Map<String, Integer> fireMap;
     private final Boolean debug;
     private final Integer whiteCycle;
 
@@ -26,6 +30,10 @@ public class DetectorConfig {
         this.placeMap = ConfigReader.getParamMap("placeMap");
         this.entityCycle = Integer.parseInt(ConfigReader.getParam("entityCycle"));
         this.entityMap = ConfigReader.getParamMap("entityMap");
+        this.liquidCycle = Integer.parseInt(ConfigReader.getParam("liquidCycle"));
+        this.liquidMap = ConfigReader.getParamMap("liquidMap");
+        this.fireCycle = Integer.parseInt(ConfigReader.getParam("fireCycle"));
+        this.fireMap = ConfigReader.getParamMap("fireMap");
         this.debug = Boolean.valueOf(ConfigReader.getParam("debug"));
         this.whiteCycle = Integer.parseInt(ConfigReader.getParam("whiteCycle"));
     }
@@ -50,6 +58,14 @@ public class DetectorConfig {
         return entityMap;
     }
 
+    public Map<String, Integer> getLiquidMap() {
+        return liquidMap;
+    }
+
+    public Map<String, Integer> getFireMap() {
+        return fireMap;
+    }
+
     public Integer getBrokenCycle() {
         return brokenCycle;
     }
@@ -66,6 +82,14 @@ public class DetectorConfig {
 
     public Integer getWhiteCycle() {
         return whiteCycle;
+    }
+
+    public Integer getLiquidCycle() {
+        return liquidCycle;
+    }
+
+    public Integer getFireCycle() {
+        return fireCycle;
     }
 
     @Override

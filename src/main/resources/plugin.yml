@@ -1,7 +1,6 @@
 name: TyroDetector
 version: ${version}
 main: org.gbcraft.tyrodetector.TyroDetector
-api-version: '1.13'
 authors: [IceBlues7]
 depend: [Plan]
 description: Detect tiro action
