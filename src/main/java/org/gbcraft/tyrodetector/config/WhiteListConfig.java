@@ -16,34 +16,34 @@ public class WhiteListConfig {
         whiteList = ConfigReader.getWhiteList();
     }
 
-    public void append(String username){
-        if(!isContain(username)) {
+    public void append(String username) {
+        if (!isContain(username)) {
             whiteList.add(username);
             ConfigWriter.setWhiteList(whiteList);
         }
     }
 
-    public void remove(String username){
-        if(isContain(username)) {
+    public void remove(String username) {
+        if (isContain(username)) {
             whiteList.remove(username);
             ConfigWriter.setWhiteList(whiteList);
         }
     }
 
-    public boolean isContain(String username){
+    public boolean isContain(String username) {
         return whiteList.contains(username);
     }
 
-    public String[] list(){
+    public String[] list() {
         return whiteList.toArray(new String[0]);
     }
 
-    public void releaseAll(){
+    public void releaseAll() {
         TyroDetector plugin = TyroDetector.getPlugin();
-        List<String> removeList= new ArrayList<>();
+        List<String> removeList = new ArrayList<>();
         whiteList.forEach(p -> {
             //如果超出时限就删除玩家
-            if(TimeHelperManager.getPlayHours(p) > plugin.getDetectorConfig().getTyroHours()){
+            if (TimeHelperManager.getPlayHours(p) > plugin.getDetectorConfig().getTyroHours()) {
                 removeList.add(p);
             }
         });

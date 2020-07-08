@@ -24,8 +24,9 @@ public class EmailManager {
 
     /**
      * 添加一封有关{@param player}的邮件
+     *
      * @param player 邮件描述的玩家
-     * @param info 邮件正文内容
+     * @param info   邮件正文内容
      */
     public void append(HumanEntity player, EmailInfo info) {
         EmailInfo emailInfo = emails.get(player);
@@ -46,6 +47,7 @@ public class EmailManager {
 
     /**
      * 发送一封邮件
+     *
      * @param info 邮件实例
      */
     private void send(EmailInfo info) {

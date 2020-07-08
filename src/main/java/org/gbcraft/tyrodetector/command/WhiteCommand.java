@@ -17,12 +17,12 @@ public class WhiteCommand extends TDCommand {
 
     @Override
     protected void run() {
-        if(sender.hasPermission("tyro.base")){
-            if(args.length < 2){
+        if (sender.hasPermission("tyro.base")) {
+            if (args.length < 2) {
                 sender.sendMessage("/tyro white {add|remove|list} <playername>");
                 return;
             }
-            switch (args[1]){
+            switch (args[1]) {
                 case "add":
                     plugin.getWhiteListConfig().append(args[2]);
                     TyroPlayersManager.tryRemove(args[2]);
@@ -34,10 +34,10 @@ public class WhiteCommand extends TDCommand {
                 case "list":
                     sender.sendMessage(Arrays.toString(plugin.getWhiteListConfig().list()));
                     StringBuilder builder = new StringBuilder();
-                    plugin.getTyroPlayers().forEach((k,v)->{
+                    plugin.getTyroPlayers().forEach((k, v) -> {
                         builder.append(v.getName());
                     });
-                    sender.sendMessage("[DEBUG]这里是当前监测玩家"+builder.toString());
+                    sender.sendMessage("[DEBUG]这里是当前监测玩家" + builder.toString());
                     break;
                 default:
                     break;

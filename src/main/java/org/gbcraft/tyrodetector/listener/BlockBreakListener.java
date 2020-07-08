@@ -17,12 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 方块破坏监测器
  */
-public class BlockBreakListener implements Listener {
-    private final Map<HumanEntity, Map<Block, Integer>> containers = new ConcurrentHashMap<>();
-    private final TyroDetector plugin;
-
+public class BlockBreakListener extends ContainerListener<Block, Integer> implements Listener {
     public BlockBreakListener(TyroDetector plugin) {
-        this.plugin = plugin;
+        super(plugin);
         // 周期性松弛缓存数据
         Bukkit.getScheduler().runTaskTimer(plugin, this::releaseAll, plugin.getDetectorConfig().getBrokenCycle() * 1200L, plugin.getDetectorConfig().getBrokenCycle() * 1200L);
     }
@@ -46,7 +43,8 @@ public class BlockBreakListener implements Listener {
         }
     }
 
-    private void joinContainers(HumanEntity player, Block block, Integer limit) {
+    @Override
+    protected final void joinContainers(HumanEntity player, Block block, Integer limit) {
         //获取玩家的破坏物品表, 如果不存在则新建
         Map<Block, Integer> playerBlocks = containers.computeIfAbsent(player, k -> new HashMap<>());
         //将破坏的方块自增1, 若不存在该方块对应的值则新增 <BlockName:1> 键值对
@@ -64,10 +62,5 @@ public class BlockBreakListener implements Listener {
             EmailManager.getManager().append(player, new EmailInfo(content));
         }
 
-    }
-
-    /*周期方法, 松弛一个周期内的监控数据*/
-    private void releaseAll() {
-        containers.forEach((k, v) -> containers.remove(k));
     }
 }

@@ -12,10 +12,11 @@ public class EmailSender {
 
     /**
      * 发送一封邮件
-     * @param title 邮件标题
+     *
+     * @param title   邮件标题
      * @param content 邮件内容
      */
-    public void send(String title, String content){
+    public void send(String title, String content) {
         EmailConfig config = TyroDetector.getPlugin().getEmailConfig();
         SimpleEmail email = new SimpleEmail();
         email.setHostName(config.getHostname());
@@ -30,8 +31,8 @@ public class EmailSender {
             email.setFrom(config.getSender());
             email.setAuthentication(config.getSender(), config.getPassword());
             // 邮件主题
-            String servername =  config.getServername();
-            if(StringUtils.isNotBlank(servername)) {
+            String servername = config.getServername();
+            if (StringUtils.isNotBlank(servername)) {
                 title = servername + " - " + title;
             }
             email.setSubject(title);
@@ -40,7 +41,8 @@ public class EmailSender {
 
             // 发送邮件
             email.send();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
         }
     }

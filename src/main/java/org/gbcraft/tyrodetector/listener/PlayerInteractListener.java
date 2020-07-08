@@ -31,7 +31,7 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if(!plugin.getTyroPlayers().containsKey(player.getUniqueId())){
+        if (!plugin.getTyroPlayers().containsKey(player.getUniqueId())) {
             return;
         }
 
@@ -59,7 +59,7 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
 
 
     @Override
-    protected void joinContainers(HumanEntity player, Material item, Integer limit) {
+    protected final void joinContainers(HumanEntity player, Material item, Integer limit) {
         //获取玩家的物品放置表, 如果不存在则新建
         Map<Material, Integer> playerItems = containers.computeIfAbsent(player, k -> new HashMap<>());
         //将放置的方块自增1, 若不存在该方块对应的值则新增 <BlockName:1> 键值对

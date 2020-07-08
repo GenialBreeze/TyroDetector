@@ -20,13 +20,14 @@ public class ConfigReader {
 
     /**
      * 从默认配置文件中读取数据
+     *
      * @param key 需要读取数据的键
      * @return 需要读取数据的值
      */
-    public static String getParam(String key){
+    public static String getParam(String key) {
         TyroDetector instance = TyroDetector.getPlugin();
         String res = null;
-        if(instance != null){
+        if (instance != null) {
             res = instance.getConfig().getString(key);
         }
 
@@ -35,13 +36,14 @@ public class ConfigReader {
 
     /**
      * 从邮件配置文件中读取数据
+     *
      * @param key 需要读取数据的键
      * @return 需要读取数据的值
      */
-    public static String getEmailParam(String key){
+    public static String getEmailParam(String key) {
         TyroDetector instance = TyroDetector.getPlugin();
         String res = null;
-        if(instance != null){
+        if (instance != null) {
             File file = new File(instance.getDataFolder(), "email.yml");
             Configuration emailConfig = YamlConfiguration.loadConfiguration(file);
             res = emailConfig.getString(key);
@@ -53,10 +55,11 @@ public class ConfigReader {
     /**
      * 从默认配置文件中读取Map，需要提供一个根，若存在
      * 则以根下的键值对为基础生成Map实例
+     *
      * @param root Map的根
      * @return 实例化的Map
      */
-    public static Map<String, Integer> getParamMap(String root){
+    public static Map<String, Integer> getParamMap(String root) {
         Map<String, Integer> res = new HashMap<>();
         TyroDetector instance = TyroDetector.getPlugin();
         FileConfiguration config = instance.getConfig();
@@ -64,7 +67,7 @@ public class ConfigReader {
 
         if (cs != null) {
             Set<String> keySet = cs.getKeys(false);
-            for(String key : keySet){
+            for (String key : keySet) {
                 res.put(key.toUpperCase(), cs.getInt(key));
             }
         }
@@ -74,10 +77,11 @@ public class ConfigReader {
 
     /**
      * 从Email配置文件中获取一个列表
+     *
      * @param key 列表名称
      * @return 列表实例
      */
-    public static List<String> getEmailList(String key){
+    public static List<String> getEmailList(String key) {
         List<String> res = null;
         TyroDetector instance = TyroDetector.getPlugin();
         File file = new File(instance.getDataFolder(), "email.yml");
@@ -89,9 +93,10 @@ public class ConfigReader {
 
     /**
      * 从白名单配置文件中获取白名单列表
+     *
      * @return 白名单实例
      */
-    public static List<String> getWhiteList(){
+    public static List<String> getWhiteList() {
         List<String> res = null;
         TyroDetector plugin = TyroDetector.getPlugin();
         File file = new File(plugin.getDataFolder(), "whitelist.yml");
@@ -100,7 +105,6 @@ public class ConfigReader {
 
         return res;
     }
-
 
 
 }

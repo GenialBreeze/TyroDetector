@@ -10,12 +10,13 @@ public abstract class ContainerListener<K, V> {
     protected final Map<HumanEntity, Map<K, V>> containers = new ConcurrentHashMap<>();
     protected final TyroDetector plugin;
 
-    public ContainerListener(TyroDetector plugin){
+    public ContainerListener(TyroDetector plugin) {
         this.plugin = plugin;
     }
 
     protected abstract void joinContainers(HumanEntity player, K block, Integer limit);
-    protected void releaseAll(){
+
+    protected void releaseAll() {
         containers.forEach((k, v) -> containers.remove(k));
     }
 }

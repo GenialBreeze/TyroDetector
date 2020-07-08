@@ -24,14 +24,14 @@ public class ConfigBoxListener implements Listener {
     }
 
     @EventHandler
-    public void onBoxClose(InventoryCloseEvent event){
+    public void onBoxClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
         // 确定当前容器为特定容器
-        if(view.getTitle().equalsIgnoreCase("TyroDetector Configuration Box")){
+        if (view.getTitle().equalsIgnoreCase("TyroDetector Configuration Box")) {
             Inventory configBox = view.getTopInventory();
             ItemStack[] items = compressInventory(configBox.getContents());
             Map<String, Integer> content = new HashMap<>();
-            for(ItemStack item : items){
+            for (ItemStack item : items) {
                 content.put(item.getType().name(), item.getAmount());
             }
             ConfigWriter.generateExpendConfig(content);

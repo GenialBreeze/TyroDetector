@@ -28,7 +28,7 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
         Player player = event.getPlayer();
 
-        if(!plugin.getTyroPlayers().containsKey(player.getUniqueId())){
+        if (!plugin.getTyroPlayers().containsKey(player.getUniqueId())) {
             return;
         }
 
@@ -43,7 +43,7 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
     }
 
     @Override
-    protected void joinContainers(HumanEntity player, Material bucket, Integer limit) {
+    protected final void joinContainers(HumanEntity player, Material bucket, Integer limit) {
         Map<Material, Integer> playerBuckets = containers.computeIfAbsent(player, k -> new HashMap<>());
         playerBuckets.merge(bucket, 1, Integer::sum);
         if (playerBuckets.get(bucket) >= limit) {

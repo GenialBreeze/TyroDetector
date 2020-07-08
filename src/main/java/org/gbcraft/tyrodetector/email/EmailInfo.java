@@ -31,12 +31,12 @@ public class EmailInfo {
         return content;
     }
 
-    public void appendContent(String content){
+    public void appendContent(String content) {
         this.content += "\n" + content;
-        this.age ++;
+        this.age++;
     }
 
-    public Integer getAge(){
+    public Integer getAge() {
         return this.age;
     }
 }

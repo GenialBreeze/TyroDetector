@@ -22,13 +22,13 @@ public class PlayerTyroListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         //首次加入？
-        if(!NameUUIDHelper.isContain(player)){
+        if (!NameUUIDHelper.isContain(player)) {
             NameUUIDHelper.append(player);
         }
         //若尚未监控
         if (!plugin.getTyroPlayers().containsKey(player.getUniqueId())) {
             //应处于监控状态
-            if(!plugin.getWhiteListConfig().isContain(player.getName()) && TimeHelperManager.getPlayHours(player.getUniqueId()) <= plugin.getDetectorConfig().getTyroHours()) {
+            if (!plugin.getWhiteListConfig().isContain(player.getName()) && TimeHelperManager.getPlayHours(player.getUniqueId()) <= plugin.getDetectorConfig().getTyroHours()) {
                 plugin.getTyroPlayers().put(player.getUniqueId(), event.getPlayer());
             }
         }
@@ -36,7 +36,7 @@ public class PlayerTyroListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event){
+    public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         plugin.getTyroPlayers().remove(player.getUniqueId());
     }

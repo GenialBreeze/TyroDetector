@@ -17,12 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 实体死亡监测器
  */
-public class EntityDeathListener implements Listener {
-    private final Map<HumanEntity, Map<Entity, Integer>> containers = new ConcurrentHashMap<>();
-    private final TyroDetector plugin;
-
+public class EntityDeathListener extends ContainerListener<Entity, Integer> implements Listener {
     public EntityDeathListener(TyroDetector plugin) {
-        this.plugin = plugin;
+        super(plugin);
         // 周期性松弛缓存数据
         Bukkit.getScheduler().runTaskTimer(plugin, this::releaseAll, plugin.getDetectorConfig().getEntityCycle() * 1200L, plugin.getDetectorConfig().getEntityCycle() * 1200L);
     }
@@ -48,7 +45,8 @@ public class EntityDeathListener implements Listener {
 
     }
 
-    private void joinContainers(HumanEntity player, Entity entity, Integer limit) {
+    @Override
+    protected final void joinContainers(HumanEntity player, Entity entity, Integer limit) {
         Map<Entity, Integer> playerEntities = containers.computeIfAbsent(player, k -> new HashMap<>());
         playerEntities.merge(entity, 1, Integer::sum);
         if (playerEntities.get(entity) >= limit) {
@@ -65,7 +63,4 @@ public class EntityDeathListener implements Listener {
         }
     }
 
-    private void releaseAll() {
-        containers.forEach((k, v) -> containers.remove(k));
-    }
 }

@@ -18,7 +18,7 @@ public class NameUUIDHelper {
     /**
      * 在插件启动时初始化，读取已有玩家信息
      */
-    public static void init(){
+    public static void init() {
         OfflinePlayer[] offlinePlayers = Bukkit.getOfflinePlayers();
         for (OfflinePlayer offlinePlayer : offlinePlayers) {
             toNameMap.put(offlinePlayer.getUniqueId(), offlinePlayer.getName());
@@ -26,24 +26,25 @@ public class NameUUIDHelper {
         }
     }
 
-    public static boolean isContain(Player player){
-        return toNameMap.get(player.getUniqueId())!=null;
+    public static boolean isContain(Player player) {
+        return toNameMap.get(player.getUniqueId()) != null;
     }
 
     /**
      * 对于首次加入服务器的玩家，手动添加相应信息
+     *
      * @param player 首次进入服务器的玩家实例
      */
-    public static void append(Player player){
+    public static void append(Player player) {
         toNameMap.put(player.getUniqueId(), player.getName());
         toUUIDMap.put(player.getName(), player.getUniqueId());
     }
 
-    public static String getName(UUID uuid){
+    public static String getName(UUID uuid) {
         return toNameMap.get(uuid);
     }
 
-    public static UUID getUUID(String name){
+    public static UUID getUUID(String name) {
         return toUUIDMap.get(name);
     }
 

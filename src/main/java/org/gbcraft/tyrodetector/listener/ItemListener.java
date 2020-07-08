@@ -68,7 +68,7 @@ public class ItemListener implements Listener {
                         if (limit != null && limit <= Math.abs(item.getAmount())) {
                             //DEBUG
                             plugin.logToFile("[DEBUG]存取个数已达到监测值");
-                            String loc = "(X:"+location.getBlockX()+",Z:"+location.getBlockZ()+",Y:"+location.getBlockY()+")";
+                            String loc = "(X:" + location.getBlockX() + ",Z:" + location.getBlockZ() + ",Y:" + location.getBlockY() + ")";
                             //世界类型
                             contentBuilder.append(player.getWorld().getName());
                             if (item.getAmount() < 0) {
@@ -89,7 +89,7 @@ public class ItemListener implements Listener {
 
                     if (!"".equalsIgnoreCase(limitItems)) {
                         //DEBUG
-                        plugin.logToFile("[DEBUG]:大量存取预警 - "+player.getName() +"\n" + limitItems);
+                        plugin.logToFile("[DEBUG]:大量存取预警 - " + player.getName() + "\n" + limitItems);
 
                         String content = contentBuilder.toString();
                         EmailManager.getManager().append(player, new EmailInfo(content));

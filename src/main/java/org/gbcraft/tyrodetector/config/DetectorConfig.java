@@ -21,7 +21,7 @@ public class DetectorConfig {
     private final Boolean debug;
     private final Integer whiteCycle;
 
-    public DetectorConfig(){
+    public DetectorConfig() {
         this.tyroHours = Integer.parseInt(ConfigReader.getParam("tyroHours"));
         this.itemMap = ConfigReader.getParamMap("itemMap");
         this.brokenCycle = Integer.parseInt(ConfigReader.getParam("brokenCycle"));
@@ -78,7 +78,9 @@ public class DetectorConfig {
         return entityCycle;
     }
 
-    public Boolean getDebug(){return debug;}
+    public Boolean getDebug() {
+        return debug;
+    }
 
     public Integer getWhiteCycle() {
         return whiteCycle;
