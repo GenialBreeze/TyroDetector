@@ -38,7 +38,7 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block clickedBlock = event.getClickedBlock();
             if (null != clickedBlock) {
-                Location location = clickedBlock.getLocation();
+                Location location = clickedBlock.getLocation().clone();
                 location.add(0, 1, 0);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (location.getBlock().getType() == Material.FIRE) {

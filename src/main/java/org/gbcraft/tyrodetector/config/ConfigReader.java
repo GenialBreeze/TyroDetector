@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.bean.VHRule;
 
 import java.io.File;
 import java.util.HashMap;
@@ -69,6 +70,31 @@ public class ConfigReader {
             Set<String> keySet = cs.getKeys(false);
             for (String key : keySet) {
                 res.put(key.toUpperCase(), cs.getInt(key));
+            }
+        }
+
+        return res;
+    }
+
+    /**
+     * 从默认配置文件中读取同时定义阈值与高度的规则Map, 需要提供一个根，若存在
+     * 则以根下的键值对为基础生成Map实例
+     *
+     * @param root Map的根
+     * @return 实例化的Map
+     */
+    public static Map<String, VHRule> getVHMap(String root) {
+        Map<String, VHRule> res = new HashMap<>();
+        TyroDetector instance = TyroDetector.getPlugin();
+        FileConfiguration config = instance.getConfig();
+        ConfigurationSection cs = config.getConfigurationSection(root);
+
+        if (cs != null) {
+            Set<String> keySet = cs.getKeys(false);
+            for (String key : keySet) {
+                String limit = key + ".limit";
+                String height = key + ".height";
+                res.put(key.toUpperCase(), new VHRule(cs.getInt(limit), cs.getInt(height)));
             }
         }
 

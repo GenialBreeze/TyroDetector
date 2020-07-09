@@ -19,7 +19,9 @@ placeCycle: 5
 
 #周期内使用流体桶的监测列表, 填写桶类型和次数, 达到阈值时预警 (名称:次数)
 liquidMap:
-  LAVA_BUCKET: 1
+  LAVA_BUCKET:
+    limit: 1
+    height: 64
 #玩家使用流体桶的监测周期 (分钟)
 liquidCycle: 5
 

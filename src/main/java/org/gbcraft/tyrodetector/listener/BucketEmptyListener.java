@@ -1,13 +1,16 @@
 package org.gbcraft.tyrodetector.listener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.bean.VHRule;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 
@@ -32,14 +35,52 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
             return;
         }
 
+
         Material bucket = event.getBucket();
-        Integer limit = plugin.getDetectorConfig().getLiquidMap().get(bucket.toString());
+        VHRule rule = plugin.getDetectorConfig().getLiquidMap().get(bucket.toString());
+        Integer height = rule.getHeight();
 
-        if (null != limit) {
-            plugin.logToFile("[DEBUG]发现需要监测的流体桶被放置 - " + event.getPlayer().getName());
-
-            joinContainers(player, bucket, limit);
+        boolean isFlame = false;
+        if(bucket == Material.LAVA_BUCKET){
+            isFlame = isFlame(event);
         }
+
+        if ((null != height && player.getLocation().getBlockY() >= height) || isFlame) {
+            Integer limit = rule.getLimit();
+
+            if (null != limit) {
+                plugin.logToFile("[DEBUG]发现需要监测的流体桶被放置 - " + event.getPlayer().getName());
+
+                joinContainers(player, bucket, limit);
+            }
+        }
+
+    }
+
+    private boolean isFlame(PlayerBucketEmptyEvent event){
+        boolean isFlame = false;
+
+        Location location = event.getBlockClicked().getLocation().clone();
+        double preY = location.getY();
+        double preZ = location.getZ();
+
+        int r = 3;
+        for (int x = -r; x <= r && !isFlame; x++) {
+            location.add(x, 0, 0);
+            location.setY(preY);
+            for (int y = -r; y <= r && !isFlame; y++) {
+                location.add(0, y, 0);
+                location.setZ(preZ);
+                for (int z = -r; z <= r && !isFlame; z++) {
+                    location.add(0, 0, z);
+                    if (location.getBlock().getType().isFlammable()) {
+                        isFlame = true;
+                    }
+                }
+            }
+        }
+
+        return isFlame;
     }
 
     @Override
