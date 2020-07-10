@@ -18,6 +18,7 @@ public class DetectorConfig {
     private final Map<String, Integer> entityMap;
     private final Integer liquidCycle;
     private final Map<String, VHRule> liquidMap;
+    private final Integer lavaBucketRange;
     private final Integer fireCycle;
     private final Map<String, Integer> fireMap;
     private final Boolean debug;
@@ -34,6 +35,7 @@ public class DetectorConfig {
         this.entityMap = ConfigReader.getParamMap("entityMap");
         this.liquidCycle = Integer.parseInt(ConfigReader.getParam("liquidCycle"));
         this.liquidMap = ConfigReader.getVHMap("liquidMap");
+        this.lavaBucketRange = Math.abs(Integer.parseInt(ConfigReader.getParam("lavaBucketRange")));
         this.fireCycle = Integer.parseInt(ConfigReader.getParam("fireCycle"));
         this.fireMap = ConfigReader.getParamMap("fireMap");
         this.debug = Boolean.valueOf(ConfigReader.getParam("debug"));
@@ -94,6 +96,10 @@ public class DetectorConfig {
 
     public Integer getFireCycle() {
         return fireCycle;
+    }
+
+    public Integer getLavaBucketRange() {
+        return lavaBucketRange;
     }
 
     @Override

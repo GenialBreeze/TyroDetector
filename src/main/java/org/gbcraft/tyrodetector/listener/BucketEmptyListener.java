@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.bean.VHRule;
+import org.gbcraft.tyrodetector.config.DetectorConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 
@@ -41,7 +42,7 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
         Integer height = rule.getHeight();
 
         boolean isFlame = false;
-        if(bucket == Material.LAVA_BUCKET){
+        if (bucket == Material.LAVA_BUCKET) {
             isFlame = isFlame(event);
         }
 
@@ -57,15 +58,15 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
 
     }
 
-    private boolean isFlame(PlayerBucketEmptyEvent event){
+    private boolean isFlame(PlayerBucketEmptyEvent event) {
         boolean isFlame = false;
 
         Location location = event.getBlockClicked().getLocation().clone();
         double preY = location.getY();
         double preZ = location.getZ();
 
-        int r = 3;
-        for (int x = -r; x <= r && !isFlame; x++) {
+        int r = plugin.getDetectorConfig().getLavaBucketRange();
+        for (int x = -r; r > 0 && x <= r && !isFlame; x++) {
             location.add(x, 0, 0);
             location.setY(preY);
             for (int y = -r; y <= r && !isFlame; y++) {
