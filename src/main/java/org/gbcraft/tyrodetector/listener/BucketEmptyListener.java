@@ -39,6 +39,10 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
 
         Material bucket = event.getBucket();
         VHRule rule = plugin.getDetectorConfig().getLiquidMap().get(bucket.toString());
+        if(null == rule){
+            return;
+        }
+
         Integer height = rule.getHeight();
 
         boolean isFlame = false;
