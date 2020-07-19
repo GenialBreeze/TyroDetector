@@ -18,10 +18,12 @@ public class ConfigCommand extends TDCommand {
 
     @Override
     protected void run() {
-        if (sender.hasPermission("tyro.base") && sender instanceof Player) {
-            Player player = (Player) sender;
-            Inventory box = Bukkit.createInventory(null, 54, "TyroDetector Configuration Box");
-            player.openInventory(box);
+        if (sender.hasPermission("tyro.config")) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                Inventory box = Bukkit.createInventory(null, 54, "TyroDetector Configuration Box");
+                player.openInventory(box);
+            }
         }
 
     }

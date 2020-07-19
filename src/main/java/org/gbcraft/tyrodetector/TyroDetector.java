@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.gbcraft.tyrodetector.command.TDCommandExecutor;
 import org.gbcraft.tyrodetector.config.DetectorConfig;
 import org.gbcraft.tyrodetector.config.EmailConfig;
+import org.gbcraft.tyrodetector.config.PlayersConfig;
 import org.gbcraft.tyrodetector.config.WhiteListConfig;
 import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.help.NameUUIDHelper;
@@ -28,6 +29,7 @@ public final class TyroDetector extends JavaPlugin {
     private static TyroDetector plugin;
     private DetectorConfig detectorConfig;
     private EmailConfig emailConfig;
+    private PlayersConfig playersConfig;
     private WhiteListConfig whiteListConfig;
     private Map<UUID, Player> tyroPlayers;
 
@@ -48,6 +50,7 @@ public final class TyroDetector extends JavaPlugin {
         /*实例化配置文件*/
         detectorConfig = new DetectorConfig();
         emailConfig = new EmailConfig();
+        playersConfig = new PlayersConfig();
         whiteListConfig = new WhiteListConfig();
 
         /*注册玩家游戏时间获取器*/
@@ -183,6 +186,7 @@ public final class TyroDetector extends JavaPlugin {
         reloadConfig();
         detectorConfig = new DetectorConfig();
         emailConfig = new EmailConfig();
+        playersConfig = new PlayersConfig();
         cycleTaskInit();
     }
 
@@ -196,6 +200,10 @@ public final class TyroDetector extends JavaPlugin {
 
     public EmailConfig getEmailConfig() {
         return emailConfig;
+    }
+
+    public PlayersConfig getPlayersConfig() {
+        return playersConfig;
     }
 
     public WhiteListConfig getWhiteListConfig() {

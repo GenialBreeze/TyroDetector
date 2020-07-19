@@ -31,7 +31,7 @@ public class TDCommandExecutor implements TabExecutor {
      * @param command 执行的命令名称(tyro)
      * @param label   标签
      * @param args    命令参数
-     * @return true 不使用默认权限提醒，保证命令体系的安全性
+     * @return true 不使用默认权限提醒
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -54,14 +54,20 @@ public class TDCommandExecutor implements TabExecutor {
         return true;
     }
 
-    String[] subCommand = {"config", "reload", "white"};
+    String[] opSubCommand = {"bind", "yes", "config", "reload", "white"};
+    String[] subCommand = {"bind", "yes"};
     String[] whiteSubCommand = {"add", "remove", "list"};
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         int length = args.length;
         if (length == 1) {
-            return Arrays.stream(subCommand).filter(p -> p.startsWith(args[0])).collect(Collectors.toList());
+            if (sender.hasPermission("tyro.command.op")) {
+                return Arrays.stream(opSubCommand).filter(p -> p.startsWith(args[0])).collect(Collectors.toList());
+            }
+            else {
+                return Arrays.stream(subCommand).filter(p -> p.startsWith(args[0])).collect(Collectors.toList());
+            }
         }
         if (length > 1 && args[0].equals("white")) {
             if (length == 2) {

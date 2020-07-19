@@ -12,10 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 配置文件写入器
@@ -60,8 +57,20 @@ public class ConfigWriter {
         }
     }
 
+    public static void setPlayers(UUID root, List<UUID> list) {
+        File file = new File(TyroDetector.getPlugin().getDataFolder(), "players.yml");
+        FileConfiguration players = YamlConfiguration.loadConfiguration(file);
+        players.set(root.toString(), list);
+        try {
+            players.save(file);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
-     * 生成额外的配置文件，该配置文件根据{@link ConfigCommand#run()}生成
+     * 生成额外的配置文件，该配置文件根据{@link ConfigCommand}生成
      * 需要根据情况修改后手动导入到默认配置文件中
      *
      * @param content 物品键(物品内部ID)值(物品监测阈值)对

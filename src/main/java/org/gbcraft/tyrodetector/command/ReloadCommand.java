@@ -13,9 +13,10 @@ public class ReloadCommand extends TDCommand {
 
     @Override
     protected void run() {
-        if (sender.hasPermission("tyro.base")) {
+        if (sender.hasPermission("tyro.reload")) {
             plugin.rebuildConfigInstance();
             sender.sendMessage("重载完毕");
         }
+
     }
 }

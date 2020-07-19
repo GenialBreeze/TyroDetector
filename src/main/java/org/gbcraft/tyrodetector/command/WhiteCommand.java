@@ -17,9 +17,9 @@ public class WhiteCommand extends TDCommand {
 
     @Override
     protected void run() {
-        if (sender.hasPermission("tyro.base")) {
+        if (sender.hasPermission("tyro.white")) {
             if (args.length < 2) {
-                sender.sendMessage("/tyro white {add|remove|list} <playername>");
+                sender.sendMessage("/tyro white {add|remove|list} <player>");
                 return;
             }
             switch (args[1]) {
@@ -43,5 +43,6 @@ public class WhiteCommand extends TDCommand {
                     break;
             }
         }
+
     }
 }
