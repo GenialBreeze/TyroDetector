@@ -45,19 +45,41 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
 
         Integer height = rule.getHeight();
 
+        boolean isLava = false;
         boolean isFlame = false;
         if (bucket == Material.LAVA_BUCKET) {
+            isLava = true;
             isFlame = isFlame(event);
         }
 
-        if ((null != height && player.getLocation().getBlockY() >= height) || isFlame) {
-            Integer limit = rule.getLimit();
+        if (null != height) {
+            Location liquidLoc = event.getBlockClicked().getLocation().add(0, 1, 0);
+            boolean taskIsLava = isLava;
+            boolean taskIsFlame = isFlame;
+            Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                Block block = liquidLoc.getBlock();
+                if(taskIsLava){
+                    boolean taskIsObsidian = false;
+                    if(block.getType() == Material.OBSIDIAN){
+                        taskIsObsidian = true;
+                    }
 
-            if (null != limit) {
-                plugin.logToFile("[DEBUG]发现需要监测的流体桶被放置 - " + event.getPlayer().getName());
+                    if(taskIsObsidian){
+                        return;
+                    }
+                }
 
-                joinContainers(player, bucket, limit);
-            }
+                if(liquidLoc.getBlockY() >= height || (taskIsLava && taskIsFlame)){
+                    Integer limit = rule.getLimit();
+
+                    if (null != limit) {
+                        plugin.logToFile("[DEBUG]发现需要监测的流体桶被放置 - " + event.getPlayer().getName());
+
+                        joinContainers(player, bucket, limit);
+                    }
+                }
+            }, 20*3);
+
         }
 
     }
