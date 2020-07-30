@@ -10,8 +10,8 @@ import org.gbcraft.tyrodetector.help.TeamHelper;
 
 import java.util.UUID;
 
-public class BindCommand extends TDCommand {
-    public BindCommand(TyroDetector plugin, CommandSender sender, String[] args) {
+public class InviteCommand extends TDCommand {
+    public InviteCommand(TyroDetector plugin, CommandSender sender, String[] args) {
         super(plugin, sender, args);
     }
 
