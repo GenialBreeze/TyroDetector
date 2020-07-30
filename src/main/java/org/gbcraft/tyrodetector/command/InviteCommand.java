@@ -73,7 +73,7 @@ public class InviteCommand extends TDCommand {
             sender.sendMessage("队长/成员未找到, 请稍后再试");
         }
         else {
-            String leaderName = plugin.getPlayersConfig().getLeader(l);
+            String leaderName = plugin.getPlayersConfig().getLeader(m);
             if (null != leaderName) {
                 if (member.equalsIgnoreCase(leaderName)) {
                     sender.sendMessage("你并不能谋权篡位");
@@ -95,9 +95,7 @@ public class InviteCommand extends TDCommand {
                 }
                 else {
                     TeamHelper.setRequests(m, l);
-                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                        TeamHelper.popLeader(m);
-                    }, 20 * 60);
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> TeamHelper.popLeader(m), 20 * 60);
                     Player mem = Bukkit.getPlayer(m);
                     if (null != mem) {
                         mem.sendMessage(ChatColor.translateAlternateColorCodes('&', "你收到了来自 " + leader + " 的组队邀请. 回复&b/tyro yes&f接受邀请. 将在&c60s&f后自动过期"));
