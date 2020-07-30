@@ -21,7 +21,7 @@ public class InviteCommand extends TDCommand {
         //把数据写入PlayersConfig里. 这些数据在邮件发送时作为额外数据附送
         String helpMsg0 = "/tyro bind <member>";
         String helpMsg1 = "/tyro bind <leader> <member>";
-        if (args.length < 1) {
+        if (args.length < 2) {
             if (sender.hasPermission("tyro.bind")) {
                 sender.sendMessage(helpMsg0);
                 sender.sendMessage(helpMsg1);
@@ -36,17 +36,17 @@ public class InviteCommand extends TDCommand {
         if (sender.hasPermission("tyro.bind")) {
             //管理员
             if (sender instanceof Player) {
-                if (args.length >= 2) {
-                    bind(args[0], args[1], true);
+                if (args.length >= 3) {
+                    bind(args[1], args[2], true);
                 }
                 else {
-                    bind(sender.getName(), args[0], false);
+                    bind(sender.getName(), args[1], false);
                 }
             }
             //控制台
             else {
-                if (args.length >= 2) {
-                    bind(args[0], args[1], true);
+                if (args.length >= 3) {
+                    bind(args[1], args[2], true);
                 }
                 else {
                     sender.sendMessage(helpMsg1);
@@ -57,7 +57,7 @@ public class InviteCommand extends TDCommand {
         else {
             //普通
             if (sender instanceof Player) {
-                bind(sender.getName(), args[0], false);
+                bind(sender.getName(), args[1], false);
             }
         }
     }
