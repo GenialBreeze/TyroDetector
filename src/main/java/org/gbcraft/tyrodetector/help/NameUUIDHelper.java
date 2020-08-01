@@ -14,15 +14,17 @@ import java.util.UUID;
 public class NameUUIDHelper {
     private final static Map<UUID, String> toNameMap = new HashMap<>();
     private final static Map<String, UUID> toUUIDMap = new HashMap<>();
+    private final static Map<UUID, OfflinePlayer> offlinePlayers = new HashMap<>();
 
     /**
      * 在插件启动时初始化，读取已有玩家信息
      */
     public static void init() {
-        OfflinePlayer[] offlinePlayers = Bukkit.getOfflinePlayers();
-        for (OfflinePlayer offlinePlayer : offlinePlayers) {
+        OfflinePlayer[] players = Bukkit.getOfflinePlayers();
+        for (OfflinePlayer offlinePlayer : players) {
             toNameMap.put(offlinePlayer.getUniqueId(), offlinePlayer.getName());
             toUUIDMap.put(offlinePlayer.getName(), offlinePlayer.getUniqueId());
+            offlinePlayers.put(offlinePlayer.getUniqueId(), offlinePlayer);
         }
     }
 
@@ -46,6 +48,10 @@ public class NameUUIDHelper {
 
     public static UUID getUUID(String name) {
         return toUUIDMap.get(name);
+    }
+
+    public static OfflinePlayer getOfflinePlayer(UUID uuid) {
+        return offlinePlayers.get(uuid);
     }
 
 }

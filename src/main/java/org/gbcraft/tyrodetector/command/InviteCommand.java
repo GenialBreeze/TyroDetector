@@ -77,8 +77,8 @@ public class InviteCommand extends TDCommand {
             sender.sendMessage(ChatMessageHelper.getMsg(playerNotFoundMsg));
         }
         else {
-            OfflinePlayer l = Bukkit.getOfflinePlayer(lUUID);
-            OfflinePlayer m = Bukkit.getOfflinePlayer(mUUID);
+            OfflinePlayer l = NameUUIDHelper.getOfflinePlayer(lUUID);
+            OfflinePlayer m = NameUUIDHelper.getOfflinePlayer(mUUID);
 
             if (plugin.getPlayersConfig().isPartner(l.getUniqueId(), m.getUniqueId())) {
                 String usurpMsg = "&c你们已经在同一队伍中了";
@@ -93,7 +93,7 @@ public class InviteCommand extends TDCommand {
                 else {
                     // 邀请人是否是队员, 如果是则将被邀请人转移到该队队长名下
                     if (plugin.getPlayersConfig().hasLeader(l.getUniqueId())) {
-                        l = Bukkit.getOfflinePlayer(plugin.getPlayersConfig().getLeaderUUID(l.getUniqueId()));
+                        l = NameUUIDHelper.getOfflinePlayer(plugin.getPlayersConfig().getLeaderUUID(l.getUniqueId()));
                     }
 
                     if (enforce) {
@@ -121,7 +121,7 @@ public class InviteCommand extends TDCommand {
                                 TeamHelper.setRequests(onlineMember, l, (Player) sender);
                             }
                             else {
-                                sender.sendMessage("&4玩家不在线");
+                                sender.sendMessage(ChatMessageHelper.getMsg("&4玩家不在线"));
                             }
                         }
                     }
