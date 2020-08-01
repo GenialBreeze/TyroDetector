@@ -39,10 +39,12 @@ public class EmailManager {
             emailInfo.appendContent(info.getContent());
             // 如果关于该玩家的邮件已到达生命周期，则判定为紧急邮件并优先于周期邮件直接发送
             if (emailInfo.getAge() >= TyroDetector.getPlugin().getEmailConfig().getAge()) {
+                String leader = TyroDetector.getPlugin().getPlayersConfig().getLeader(player.getUniqueId());
                 emailInfo.setTitle(
                         "服务器可疑玩家预警 - " + player.getName() +
                                 " - " + TimeHelperManager.getPlayHours(player.getName()) +
-                                "小时 " + "队长: " + TyroDetector.getPlugin().getPlayersConfig().getLeader(player.getUniqueId()));
+                                "小时 " + "队长: " + leader);
+                emailInfo.fixAddContent("队伍信息\n" + TyroDetector.getPlugin().getPlayersConfig().getPartyInfo(player.getUniqueId()));
                 send(emailInfo);
                 emails.remove(player);
             }
@@ -70,8 +72,10 @@ public class EmailManager {
         String title = "服务器周期日志";
         StringBuilder content = new StringBuilder();
         emails.forEach((key, value) -> {
-            content.append(key.getName()).append("-").append(TimeHelperManager.getPlayHours(key.getName())).append("小时 ").append("队长: ").append(TyroDetector.getPlugin().getPlayersConfig().getLeader(key.getUniqueId()));
-            content.append(":\n").append(value.getContent()).append("\n\n");
+            String leader = TyroDetector.getPlugin().getPlayersConfig().getLeader(key.getUniqueId());
+            content.append(key.getName()).append("-").append(TimeHelperManager.getPlayHours(key.getName())).append("小时 ").append("队长: ").append(leader);
+            content.append(":\n").append(value.getContent()).
+                    append("\n队伍信息\n").append(TyroDetector.getPlugin().getPlayersConfig().getPartyInfo(key.getUniqueId())).append("\n\n");
             emails.remove(key);
         });
 

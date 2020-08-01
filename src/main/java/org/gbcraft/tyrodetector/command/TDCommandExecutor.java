@@ -80,6 +80,6 @@ public class TDCommandExecutor implements TabExecutor {
 
         ArrayList<String> list = new ArrayList<>();
         plugin.getServer().getOnlinePlayers().forEach(p -> list.add(p.getName()));
-        return Arrays.stream(list.toArray(new String[0])).filter(p -> p.startsWith(args[args.length - 1])).collect(Collectors.toList());
+        return Arrays.stream(list.toArray(new String[0])).filter(p -> p.toLowerCase().startsWith(args[args.length - 1].toLowerCase())).collect(Collectors.toList());
     }
 }

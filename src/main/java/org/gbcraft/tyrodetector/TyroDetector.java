@@ -46,6 +46,7 @@ public final class TyroDetector extends JavaPlugin {
         saveDefaultConfig();
         saveResource("email.yml", false);
         saveResource("whitelist.yml", false);
+        saveResource("players.yml", false);
 
         /*实例化配置文件*/
         detectorConfig = new DetectorConfig();
@@ -116,7 +117,7 @@ public final class TyroDetector extends JavaPlugin {
         cycle = emailCycleTask.isCancelled();
         logToFile("[DEBUG]邮件周期日志是否被取消: " + cycle);
 
-        /*启用白名单松弛周期任务*/
+        /*启用白名单 松弛周期任务*/
         whiteCycleTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, () -> {
             whiteListConfig.releaseAll();
             logToFile("[DEBUG]白名单松弛完毕");

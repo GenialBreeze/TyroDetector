@@ -1,10 +1,11 @@
 package org.gbcraft.tyrodetector.command;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.help.ChatMessageHelper;
 import org.gbcraft.tyrodetector.help.NameUUIDHelper;
 import org.gbcraft.tyrodetector.help.TeamHelper;
 
@@ -19,8 +20,8 @@ public class InviteCommand extends TDCommand {
     protected void run() {
         //获取sender uuid然后根据args(要绑定玩家的名称)获取要绑定玩家的uuid然后
         //把数据写入PlayersConfig里. 这些数据在邮件发送时作为额外数据附送
-        String helpMsg0 = "/tyro bind <member>";
-        String helpMsg1 = "/tyro bind <leader> <member>";
+        String helpMsg0 = "/tyro invite <member>";
+        String helpMsg1 = "/tyro invite <leader> <member>";
         if (args.length < 2) {
             if (sender.hasPermission("tyro.bind")) {
                 sender.sendMessage(helpMsg0);
@@ -64,44 +65,71 @@ public class InviteCommand extends TDCommand {
 
     private void bind(String leader, String member, Boolean enforce) {
         if (leader.equalsIgnoreCase(member)) {
-            sender.sendMessage("禁止自娱自乐!");
+            String lonelyMsg = "&c禁止自娱自乐!";
+            sender.sendMessage(ChatMessageHelper.getMsg(lonelyMsg));
             return;
         }
-        UUID l = NameUUIDHelper.getUUID(leader);
-        UUID m = NameUUIDHelper.getUUID(member);
-        if (null == l || null == m) {
-            sender.sendMessage("队长/成员未找到, 请稍后再试");
+        UUID lUUID = NameUUIDHelper.getUUID(leader);
+        UUID mUUID = NameUUIDHelper.getUUID(member);
+
+        if (null == lUUID || null == mUUID) {
+            String playerNotFoundMsg = "&c队长/成员未找到, 请稍后再试";
+            sender.sendMessage(ChatMessageHelper.getMsg(playerNotFoundMsg));
         }
         else {
-            String leaderName = plugin.getPlayersConfig().getLeader(m);
-            if (null != leaderName) {
-                if (member.equalsIgnoreCase(leaderName)) {
-                    sender.sendMessage("你并不能谋权篡位");
-                }
-                else {
-                    sender.sendMessage("该玩家已有队伍");
-                }
+            OfflinePlayer l = Bukkit.getOfflinePlayer(lUUID);
+            OfflinePlayer m = Bukkit.getOfflinePlayer(mUUID);
 
-                return;
-            }
-
-            if (enforce) {
-                plugin.getPlayersConfig().addPlayers(l, m);
+            if (plugin.getPlayersConfig().isPartner(l.getUniqueId(), m.getUniqueId())) {
+                String usurpMsg = "&c你们已经在同一队伍中了";
+                sender.sendMessage(ChatMessageHelper.getMsg(usurpMsg));
             }
             else {
-                UUID tempLeader = TeamHelper.getLeader(m);
-                if (null != tempLeader && l == tempLeader) {
-                    sender.sendMessage("已经发起过同样的邀请了.");
+                // 不同队
+                if (plugin.getPlayersConfig().hasLeader(m.getUniqueId())) {
+                    String hadPartyMsg = "&c该玩家已有队伍";
+                    sender.sendMessage(ChatMessageHelper.getMsg(hadPartyMsg));
                 }
                 else {
-                    TeamHelper.setRequests(m, l);
-                    Bukkit.getScheduler().runTaskLater(plugin, () -> TeamHelper.popLeader(m), 20 * 60);
-                    Player mem = Bukkit.getPlayer(m);
-                    if (null != mem) {
-                        mem.sendMessage(ChatColor.translateAlternateColorCodes('&', "你收到了来自 " + leader + " 的组队邀请. 回复&b/tyro yes&f接受邀请. 将在&c60s&f后自动过期"));
+                    // 邀请人是否是队员, 如果是则将被邀请人转移到该队队长名下
+                    if (plugin.getPlayersConfig().hasLeader(l.getUniqueId())) {
+                        l = Bukkit.getOfflinePlayer(plugin.getPlayersConfig().getLeaderUUID(l.getUniqueId()));
+                    }
+
+                    if (enforce) {
+                        // 管理员权限强制绑定
+                        plugin.getPlayersConfig().addPlayers(l.getUniqueId(), m.getUniqueId());
+                    }
+                    else {
+                        UUID tempLeader = TeamHelper.getTempLeader(m.getUniqueId());
+                        if (null != tempLeader) {
+                            String sameInviteMsg = "&c已经发起过同样的邀请了";
+                            String hasInviteMsg = "&c对方有正在处理的邀请";
+                            if (l.getUniqueId().equals(tempLeader)) {
+                                sender.sendMessage(ChatMessageHelper.getMsg(sameInviteMsg));
+                            }
+                            else {
+                                sender.sendMessage(ChatMessageHelper.getMsg(hasInviteMsg));
+                            }
+
+
+                        }
+                        else {
+                            if (null != m.getPlayer()) {
+                                Player onlineMember = m.getPlayer();
+
+                                TeamHelper.setRequests(onlineMember, l, (Player) sender);
+                            }
+                            else {
+                                sender.sendMessage("&4玩家不在线");
+                            }
+                        }
                     }
                 }
+
+
             }
+
         }
 
     }

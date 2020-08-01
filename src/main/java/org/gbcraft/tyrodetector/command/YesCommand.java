@@ -4,8 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.gbcraft.tyrodetector.TyroDetector;
-import org.gbcraft.tyrodetector.config.PlayersConfig;
-import org.gbcraft.tyrodetector.help.NameUUIDHelper;
+import org.gbcraft.tyrodetector.help.ChatMessageHelper;
 import org.gbcraft.tyrodetector.help.TeamHelper;
 
 import java.util.UUID;
@@ -20,17 +19,21 @@ public class YesCommand extends TDCommand {
     protected void run() {
         if (sender instanceof Player) {
             Player member = (Player) sender;
-            UUID leader = TeamHelper.popLeader(member.getUniqueId());
+            UUID leader = TeamHelper.popTempLeader(member.getUniqueId());
+            TeamHelper.cancelOutTimeTask(member.getUniqueId());
             if (null != leader) {
-                plugin.getPlayersConfig().addPlayers(leader, member.getUniqueId());
                 Player lead = Bukkit.getPlayer(leader);
                 if (null != lead) {
-                    lead.sendMessage("绑定成功: " + lead.getName() + "与" + sender.getName());
-                    sender.sendMessage("绑定成功: " + lead.getName() + "与" + sender.getName());
+                    plugin.getPlayersConfig().addPlayers(leader, member.getUniqueId());
+                    String successMsg = "&2绑定成功: " + lead.getName() + "与" + sender.getName();
+
+                    lead.sendMessage(ChatMessageHelper.getMsg(successMsg));
+                    member.sendMessage(ChatMessageHelper.getMsg(successMsg));
                 }
             }
             else {
-                sender.sendMessage("你没有待回复的邀请");
+                String wrongMsg = "&c你没有待回复的邀请";
+                sender.sendMessage(ChatMessageHelper.getMsg(wrongMsg));
             }
         }
     }

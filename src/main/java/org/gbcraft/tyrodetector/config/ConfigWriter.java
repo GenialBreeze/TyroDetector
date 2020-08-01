@@ -60,7 +60,11 @@ public class ConfigWriter {
     public static void setPlayers(UUID root, List<UUID> list) {
         File file = new File(TyroDetector.getPlugin().getDataFolder(), "players.yml");
         FileConfiguration players = YamlConfiguration.loadConfiguration(file);
-        players.set(root.toString(), list);
+        List<String> uuids = new ArrayList<>();
+        list.forEach(u -> {
+            uuids.add(u.toString());
+        });
+        players.set(root.toString(), uuids);
         try {
             players.save(file);
         }

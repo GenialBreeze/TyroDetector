@@ -36,6 +36,10 @@ public class EmailInfo {
         this.age++;
     }
 
+    public void fixAddContent(String content){
+        this.content += "\n" + content;
+    }
+
     public Integer getAge() {
         return this.age;
     }
