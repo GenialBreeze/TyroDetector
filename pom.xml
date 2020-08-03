@@ -76,7 +76,8 @@
             <groupId>com.djrapitops</groupId>
             <artifactId>plan</artifactId>
             <version>5.0</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${basedir}\lib\plan-5.0.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
