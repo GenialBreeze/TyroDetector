@@ -41,7 +41,7 @@ public class TeamHelper {
 
         memToLeaRequests.put(member.getUniqueId(), leader.getUniqueId());
         BukkitTask outTimeTask = Bukkit.getScheduler().runTaskLaterAsynchronously(TyroDetector.getPlugin(), () -> {
-            String timeOutMsg = "&c向玩家" + member + "发送的邀请已过期";
+            String timeOutMsg = "&c向玩家" + member.getName() + "发送的邀请已过期";
             if (sender.isOnline()) {
                 sender.sendMessage(ChatMessageHelper.getMsg(timeOutMsg));
             }
