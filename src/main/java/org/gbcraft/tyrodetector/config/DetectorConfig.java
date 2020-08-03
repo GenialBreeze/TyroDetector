@@ -24,6 +24,7 @@ public class DetectorConfig {
     private final Map<String, Integer> fireMap;
     private final Boolean debug;
     private final Integer whiteCycle;
+    private final Boolean tntDupePredicate;
 
     public DetectorConfig() {
         this.tyroHours = Integer.parseInt(ConfigReader.getParam("tyroHours"));
@@ -42,6 +43,7 @@ public class DetectorConfig {
         this.fireMap = ConfigReader.getParamMap("fireMap");
         this.debug = Boolean.valueOf(ConfigReader.getParam("debug"));
         this.whiteCycle = Integer.parseInt(ConfigReader.getParam("whiteCycle"));
+        this.tntDupePredicate = Boolean.valueOf(ConfigReader.getParam("tntDupePredicate"));
     }
 
     public Integer getTyroHours() {
@@ -122,6 +124,7 @@ public class DetectorConfig {
                 ", entityMap=" + entityMap +
                 ", debug=" + debug +
                 ", whiteCycle=" + whiteCycle +
+                ", tntDupePredicate=" + tntDupePredicate +
                 '}';
     }
 }

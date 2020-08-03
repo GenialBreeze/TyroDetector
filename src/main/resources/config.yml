@@ -43,6 +43,10 @@ entityMap:
 #统计实体死亡次数的周期 (分钟)
 entityCycle: 5
 
+# 检测tnt复制，玩家在粘液块及珊瑚或活塞旁放置tnt时预警
+# true为开启，false为关闭
+tntDupePredicate: true
+
 #白名单尝试松弛周期 (分钟) 每隔一段时间尝试将游玩时限已达监测时限的玩家移除白名单
 whiteCycle: 60
 
