@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.bean.VHRule;
-import org.gbcraft.tyrodetector.config.DetectorConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 

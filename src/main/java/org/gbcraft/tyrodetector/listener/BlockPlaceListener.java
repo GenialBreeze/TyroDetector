@@ -1,7 +1,10 @@
 package org.gbcraft.tyrodetector.listener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,8 +14,9 @@ import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 方块放置监测器
@@ -40,6 +44,66 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
 
             joinContainers(player, block, limit);
         }
+
+        if (block.getType() == Material.TNT) {
+            Location detectLocation = block.getLocation();
+            boolean hasPiston = findNearbyBlock(detectLocation, Material.PISTON) || findNearbyBlock(detectLocation, Material.PISTON_HEAD) || findNearbyBlock(detectLocation, Material.STICKY_PISTON);
+            boolean hasSlimeBlock = findNearbyBlock(detectLocation, Material.SLIME_BLOCK);
+            String serverVer = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
+            int minorVer = Integer.parseInt(serverVer.split("_")[1]);
+            // 注意蜜蜂块
+            if (minorVer >= 15) {
+                hasSlimeBlock = hasSlimeBlock || findNearbyBlock(detectLocation, Material.HONEY_BLOCK);
+            }
+
+            boolean hasCoralFan = false;
+            // 我懒，只能让cpu勤快了
+            for (Material mat : Material.values()) {
+                if (!isCoralFan(mat)) {
+                    continue;
+                }
+                hasCoralFan = hasCoralFan || findNearbyBlock(detectLocation, mat);
+            }
+
+            if (hasPiston || (hasSlimeBlock && hasCoralFan)) {
+                plugin.logToFile("[DEBUG]疑似TNT复制,邮件准备");
+                plugin.logToFile("[DEBUG]目标: " + player.getName() + " 方块类型: " + block.getType().name());
+                String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
+                String content = player.getWorld().getName() +
+                        " 放置 " + block.getType().name() +
+                        " " + new SimpleDateFormat("HH:mm").format(new Date()) +
+                        " " + loc + "，疑似构成TNT复制";
+                EmailManager.getManager().append(player, new EmailInfo(content));
+            }
+        }
+    }
+
+    private boolean isCoralFan(Material material) {
+        switch (material) {
+            case BRAIN_CORAL_FAN:
+            case BUBBLE_CORAL_FAN:
+            case DEAD_BRAIN_CORAL_FAN:
+            case DEAD_BUBBLE_CORAL_FAN:
+            case DEAD_FIRE_CORAL_FAN:
+            case DEAD_HORN_CORAL_FAN:
+            case DEAD_TUBE_CORAL_FAN:
+            case FIRE_CORAL_FAN:
+            case HORN_CORAL_FAN:
+            case TUBE_CORAL_FAN:
+            case BRAIN_CORAL_WALL_FAN:
+            case BUBBLE_CORAL_WALL_FAN:
+            case DEAD_BRAIN_CORAL_WALL_FAN:
+            case DEAD_BUBBLE_CORAL_WALL_FAN:
+            case DEAD_FIRE_CORAL_WALL_FAN:
+            case DEAD_HORN_CORAL_WALL_FAN:
+            case DEAD_TUBE_CORAL_WALL_FAN:
+            case FIRE_CORAL_WALL_FAN:
+            case HORN_CORAL_WALL_FAN:
+            case TUBE_CORAL_WALL_FAN:
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -60,7 +124,16 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
                     " " + loc;
             EmailManager.getManager().append(player, new EmailInfo(content));
         }
-
     }
 
+    private boolean findNearbyBlock(Location location, Material targetMaterial) {
+        for (BlockFace blockFace : BlockFace.values()) {
+            Location newLocation = location.clone().add(blockFace.getModX(), blockFace.getModY(), blockFace.getModZ());
+            if (newLocation.getBlock().getType() == targetMaterial) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
