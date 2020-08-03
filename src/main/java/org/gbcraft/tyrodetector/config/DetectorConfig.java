@@ -10,6 +10,7 @@ import java.util.Map;
 public class DetectorConfig {
     private final Integer tyroHours;
     private final Map<String, Integer> itemMap;
+    private final Map<String, Integer> dispenserMap;
     private final Integer brokenCycle;
     private final Map<String, Integer> brokenMap;
     private final Integer placeCycle;
@@ -27,6 +28,7 @@ public class DetectorConfig {
     public DetectorConfig() {
         this.tyroHours = Integer.parseInt(ConfigReader.getParam("tyroHours"));
         this.itemMap = ConfigReader.getParamMap("itemMap");
+        this.dispenserMap = ConfigReader.getParamMap("dispenser");
         this.brokenCycle = Integer.parseInt(ConfigReader.getParam("brokenCycle"));
         this.brokenMap = ConfigReader.getParamMap("brokenMap");
         this.placeCycle = Integer.parseInt(ConfigReader.getParam("placeCycle"));
@@ -102,11 +104,16 @@ public class DetectorConfig {
         return lavaBucketRange;
     }
 
+    public Map<String, Integer> getDispenserMap() {
+        return dispenserMap;
+    }
+
     @Override
     public String toString() {
         return "DetectorConfig{" +
                 "tyroHours=" + tyroHours +
                 ", itemMap=" + itemMap +
+                ", dispenserMap=" + dispenserMap +
                 ", brokenCycle=" + brokenCycle +
                 ", brokenMap=" + brokenMap +
                 ", placeCycle=" + placeCycle +
