@@ -2,7 +2,6 @@ package org.gbcraft.tyrodetector.listener;
 
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
-import org.bukkit.block.Dispenser;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
@@ -57,7 +56,6 @@ public class ItemListener implements Listener {
                 if (location != null) {
                     // 监测物品表
                     Map<String, Integer> itemMap = plugin.getDetectorConfig().getItemMap();
-                    Map<String, Integer> dispenserMap = plugin.getDetectorConfig().getDispenserMap();
 
                     StringBuilder contentBuilder = new StringBuilder();
 
@@ -86,10 +84,6 @@ public class ItemListener implements Listener {
                             contentBuilder.append(" ").append(loc);
                             contentBuilder.append("\n");
                         }
-
-                        if (holder instanceof Dispenser) {
-                            checkDispenserItem(player, item, location);
-                        }
                     }
                     String limitItems = contentBuilder.toString();
 
@@ -104,43 +98,6 @@ public class ItemListener implements Listener {
                 containers.remove(player);
             }
         }
-    }
-
-    private void checkDispenserItem(HumanEntity player, ItemStack delta, Location location) {
-        Map<String, Integer> dispenserMap = plugin.getDetectorConfig().getDispenserMap();
-
-        Integer limit = dispenserMap.get(delta.getType().name());
-        if (limit == null) {
-            return;
-        }
-
-        plugin.logToFile("[DEBUG]发现需要监控存入的物品");
-
-        if (delta.getAmount() < limit) {
-            return;
-        }
-        StringBuilder contentBuilder = new StringBuilder();
-        plugin.logToFile("[DEBUG]非法存入个数已达到监测值");
-        String loc = "(X:" + location.getBlockX() + ",Z:" + location.getBlockZ() + ",Y:" + location.getBlockY() + ")";
-        //世界类型
-        contentBuilder.append(player.getWorld().getName()).append(" 向发射器");
-        if (delta.getAmount() < 0) {
-            contentBuilder.append(" 取出 ");
-        }
-        else {
-            contentBuilder.append(" 存入 ");
-        }
-        contentBuilder.append(delta.getType());
-        contentBuilder.append(" x");
-        contentBuilder.append(Math.abs(delta.getAmount()));
-        contentBuilder.append(" ").append(new SimpleDateFormat("HH:mm").format(new Date()));
-        contentBuilder.append(" ").append(loc);
-        contentBuilder.append("\n");
-
-        plugin.logToFile("[DEBUG]:非法存取预警 - " + player.getName() + "\n" + contentBuilder.toString());
-
-        String content = contentBuilder.toString();
-        EmailManager.getManager().append(player, new EmailInfo(content));
     }
 
     // 确保一定能监听到容器打开操作

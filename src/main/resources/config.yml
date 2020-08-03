@@ -5,9 +5,6 @@ itemMap:
   GUNPOWDER: 12
   DIAMOND: 10
   IRON_INGOT: 64
-#发射器内放置物品监测列表，达到阀值时预警 （名称:个数）
-dispenser:
-  TNT: 1
 #周期内破坏方块监测列表, 达到阈值时预警 (名称:个数)
 brokenMap:
   COBBLESTONE: 10
