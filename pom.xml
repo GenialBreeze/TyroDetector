@@ -6,7 +6,7 @@
 
     <groupId>org.gbcraft</groupId>
     <artifactId>TyroDetector</artifactId>
-    <version>4.0.9-ALPHA</version>
+    <version>4.1.0-ALPHA</version>
     <packaging>jar</packaging>
 
     <name>TyroDetector</name>
@@ -76,7 +76,8 @@
             <groupId>com.djrapitops</groupId>
             <artifactId>plan</artifactId>
             <version>5.0</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${basedir}\lib\plan-5.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>cn.mcres.luckyfish</groupId>

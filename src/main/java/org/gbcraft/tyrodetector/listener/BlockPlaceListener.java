@@ -56,14 +56,9 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
                 hasSlimeBlock = hasSlimeBlock || findNearbyBlock(detectLocation, Material.HONEY_BLOCK);
             }
 
-            boolean hasCoralFan = false;
-            // 我懒，只能让cpu勤快了
-            for (Material mat : Material.values()) {
-                if (!isCoralFan(mat)) {
-                    continue;
-                }
-                hasCoralFan = hasCoralFan || findNearbyBlock(detectLocation, mat);
-            }
+            boolean hasCoralFan;
+            // CPU并不勤快 并提出了更优雅的写法
+            hasCoralFan = findNearbyCoral(detectLocation);
 
             if (hasPiston || (hasSlimeBlock && hasCoralFan)) {
                 plugin.logToFile("[DEBUG]疑似TNT复制,邮件准备");
@@ -75,34 +70,6 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
                         " " + loc + "，疑似构成TNT复制";
                 EmailManager.getManager().append(player, new EmailInfo(content));
             }
-        }
-    }
-
-    private boolean isCoralFan(Material material) {
-        switch (material) {
-            case BRAIN_CORAL_FAN:
-            case BUBBLE_CORAL_FAN:
-            case DEAD_BRAIN_CORAL_FAN:
-            case DEAD_BUBBLE_CORAL_FAN:
-            case DEAD_FIRE_CORAL_FAN:
-            case DEAD_HORN_CORAL_FAN:
-            case DEAD_TUBE_CORAL_FAN:
-            case FIRE_CORAL_FAN:
-            case HORN_CORAL_FAN:
-            case TUBE_CORAL_FAN:
-            case BRAIN_CORAL_WALL_FAN:
-            case BUBBLE_CORAL_WALL_FAN:
-            case DEAD_BRAIN_CORAL_WALL_FAN:
-            case DEAD_BUBBLE_CORAL_WALL_FAN:
-            case DEAD_FIRE_CORAL_WALL_FAN:
-            case DEAD_HORN_CORAL_WALL_FAN:
-            case DEAD_TUBE_CORAL_WALL_FAN:
-            case FIRE_CORAL_WALL_FAN:
-            case HORN_CORAL_WALL_FAN:
-            case TUBE_CORAL_WALL_FAN:
-                return true;
-            default:
-                return false;
         }
     }
 
@@ -124,6 +91,18 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
                     " " + loc;
             EmailManager.getManager().append(player, new EmailInfo(content));
         }
+    }
+
+    private boolean findNearbyCoral(Location location) {
+        for (BlockFace blockFace : BlockFace.values()) {
+            Location newLocation = location.clone().add(blockFace.getModX(), blockFace.getModY(), blockFace.getModZ());
+            String blockName = newLocation.getBlock().getType().name();
+            if (blockName.contains("CORAL_FAN") || blockName.contains("CORAL_WALL_FAN")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private boolean findNearbyBlock(Location location, Material targetMaterial) {
