@@ -78,5 +78,10 @@
             <version>5.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.mcres.luckyfish</groupId>
+            <artifactId>PluginCommons</artifactId>
+            <version>1.2-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
