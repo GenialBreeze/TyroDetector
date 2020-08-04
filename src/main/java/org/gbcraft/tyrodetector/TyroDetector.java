@@ -16,6 +16,7 @@ import org.gbcraft.tyrodetector.help.PlanTimeHelper;
 import org.gbcraft.tyrodetector.help.TimeHelperManager;
 import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 import org.gbcraft.tyrodetector.listener.*;
+import org.gbcraft.tyrodetector.prediction.PredictContainer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -74,6 +75,8 @@ public final class TyroDetector extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
 
         Bukkit.getPluginManager().registerEvents(new ConfigBoxListener(this), this);
+
+        PredictContainer.init();
 
         /*注册命令执行器*/
         TDCommandExecutor executor = new TDCommandExecutor(plugin);

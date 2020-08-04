@@ -3,9 +3,7 @@ package org.gbcraft.tyrodetector.email;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.gbcraft.tyrodetector.TyroDetector;
-import org.gbcraft.tyrodetector.config.PlayersConfig;
 import org.gbcraft.tyrodetector.help.TimeHelperManager;
-import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

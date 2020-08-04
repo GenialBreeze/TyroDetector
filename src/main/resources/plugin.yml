@@ -3,6 +3,7 @@ version: ${version}
 main: org.gbcraft.tyrodetector.TyroDetector
 authors: [IceBlues7]
 description: Detect tiro action
+api-version: 1.15
 
 commands:
   tyro:

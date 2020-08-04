@@ -1,41 +1,57 @@
-package org.gbcraft.tyrodetector.predication;
+package org.gbcraft.tyrodetector.prediction;
 
 import cn.mcres.luckyfish.plugincommons.utils.MaterialUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
+import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.prediction.util.LocationList;
 
-import java.util.LinkedList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class FluidPredicator {
+public class FluidPredictor extends Predictor {
     private final Location predictLocation;
     private final Material predictFluid;
 
-    public FluidPredicator(Location predictLocation, Material predictFluid) {
+    public FluidPredictor(Location predictLocation, Material predictFluid) {
         this.predictLocation = predictLocation;
         this.predictFluid = predictFluid;
     }
 
-    public PredicatedLevel predicateDamage() {
-        List<Location> loggedLocation = new LinkedList<>();
-        List<Location> destroyedBlock = new LinkedList<>();
+    @Override
+    public PredictedLevel predictDamage() {
+        int level = predictDamageLevel();
+
+        PredictedLevel predictedLevel = PredictedLevel.checkDamageProbability(level);
+        TyroDetector.getPlugin().logToFile("[DEBUG]: 预测流体危害等级：" + level + "，判定程度：" + predictedLevel);
+        return predictedLevel;
+    }
+
+    @Override
+    public int predictDamageLevel() {
+        List<Location> loggedLocation = new LocationList();
+        List<Location> destroyedBlock = new LocationList();
 
         checkFlowLocation(predictLocation, false, 8, loggedLocation, destroyedBlock);
 
         int level = 0;
         for (Location location : destroyedBlock) {
             if (MaterialUtil.isRedstoneBlock(location.getBlock().getType())) {
-                level += 10;
+                level += 4;
             }
-            level += 1;
+            level += 2;
         }
+        level += loggedLocation.size();
 
         for (Location location : loggedLocation) {
             level += checkSurroundings(location);
         }
 
-        return PredicatedLevel.checkDamageProbability(level);
+        return level;
     }
 
     private boolean checkFlowLocation(Location checkLocation, boolean fall, int level, List<Location> loggedLocation, List<Location> destroyedBlock) {
@@ -79,9 +95,9 @@ public class FluidPredicator {
                     for (int z = -2; z <= 2; z++) {
                         Location checkLocation = location.clone().add(x, y, z);
                         if (checkLocation.getBlock().getType() == Material.TNT) {
-                            predictLevel += new TntPredicator(checkLocation).predicateDamageLevel();
+                            predictLevel += new TntPredictor(checkLocation).predictDamageLevel();
                         } else if (checkLocation.getBlock().getType().isFlammable()) {
-                            predictLevel += new FirePredicator(checkLocation).predicateDamageLevel();
+                            predictLevel += new FirePredictor(checkLocation).predictDamageLevel();
                         }
                     }
                 }
@@ -89,5 +105,15 @@ public class FluidPredicator {
         }
 
         return predictLevel;
+    }
+
+    @Override
+    public String toEmailContent(HumanEntity player, PredictedLevel cache) {
+        String loc = "(X:" + predictLocation.getBlockX() + ",Z:" + predictLocation.getBlockZ() + ",Y:" + predictLocation.getBlockY() + ")";
+        return player.getWorld().getName() +
+                " 放置 " + predictFluid.name() +
+                " " + new SimpleDateFormat("HH:mm").format(new Date()) +
+                " " + loc +
+                " 严重性 " + cache;
     }
 }
