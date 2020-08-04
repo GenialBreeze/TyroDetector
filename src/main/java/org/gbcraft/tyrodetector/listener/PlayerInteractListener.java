@@ -43,7 +43,6 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
                 location.add(event.getBlockFace().getModX(), event.getBlockFace().getModY(), event.getBlockFace().getModZ());
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (location.getBlock().getType() == Material.FIRE) {
-
                         // 火势风险预测
                         PredictorManager.firePredict(player, location);
 

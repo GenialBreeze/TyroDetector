@@ -1,9 +1,9 @@
 package org.gbcraft.tyrodetector.bean;
 
 public class VHRule {
-    Integer limit;
+    private final Integer limit;
     // Spigot default is 0, just equals lowest Y
-    Integer height;
+    private final Integer height;
 
     public VHRule(Integer value, Integer height) {
         this.limit = value;

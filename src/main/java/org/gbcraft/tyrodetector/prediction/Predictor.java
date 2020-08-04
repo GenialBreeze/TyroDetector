@@ -1,12 +1,11 @@
 package org.gbcraft.tyrodetector.prediction;
 
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 
-public abstract class Predictor {
-    public abstract PredictedLevel predictDamage();
+public interface Predictor {
+    PredictedLevel predictDamage();
 
-    public abstract int predictDamageLevel();
+    int predictDamageLevel();
 
-    public abstract String toEmailContent(HumanEntity player, PredictedLevel cache);
+    String toEmailContent(HumanEntity player, PredictedLevel cache);
 }

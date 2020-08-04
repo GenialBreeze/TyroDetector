@@ -48,7 +48,7 @@ public class ItemListener implements Listener {
             final ItemStack[] before = containers.get(player);
             if (before != null) {
                 // 玩家操作后的背包
-                final ItemStack[] after = compressInventory(event.getInventory().getContents());
+                final ItemStack[] after = ConfigBoxListener.compressInventory(event.getInventory().getContents());
                 // 操作前后物品变化
                 final ItemStack[] diff = compareInventories(before, after);
                 // 容器大概所在位置
@@ -110,7 +110,7 @@ public class ItemListener implements Listener {
 
         InventoryHolder holder = event.getInventory().getHolder();
         if (holder instanceof BlockState || holder instanceof DoubleChest) {
-            containers.put(event.getPlayer(), compressInventory(event.getInventory().getContents()));
+            containers.put(event.getPlayer(), ConfigBoxListener.compressInventory(event.getInventory().getContents()));
         }
 
     }
@@ -155,25 +155,4 @@ public class ItemListener implements Listener {
         }
         return diff.toArray(new ItemStack[0]);
     }
-
-    public static ItemStack[] compressInventory(ItemStack[] items) {
-        final ArrayList<ItemStack> compressed = new ArrayList<>();
-        for (final ItemStack item : items) {
-            if (item != null) {
-                boolean found = false;
-                for (final ItemStack item2 : compressed) {
-                    if (item2.isSimilar(item)) {
-                        item2.setAmount(item2.getAmount() + item.getAmount());
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    compressed.add(item.clone());
-                }
-            }
-        }
-        return compressed.toArray(new ItemStack[0]);
-    }
-
 }

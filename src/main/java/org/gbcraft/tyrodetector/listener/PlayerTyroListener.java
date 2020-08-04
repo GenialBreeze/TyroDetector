@@ -8,10 +8,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.help.NameUUIDHelper;
 import org.gbcraft.tyrodetector.help.TimeHelperManager;
-import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 
 public class PlayerTyroListener implements Listener {
-
     private final TyroDetector plugin;
 
     public PlayerTyroListener(TyroDetector plugin) {
