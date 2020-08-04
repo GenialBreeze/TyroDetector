@@ -17,6 +17,7 @@ import org.gbcraft.tyrodetector.help.TimeHelperManager;
 import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 import org.gbcraft.tyrodetector.listener.*;
 import org.gbcraft.tyrodetector.prediction.PredictContainer;
+import org.gbcraft.tyrodetector.prediction.PredictorManager;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -60,6 +61,9 @@ public final class TyroDetector extends JavaPlugin {
 
         /*获取所有监测玩家*/
         tyroPlayers = TyroPlayersManager.getTyroPlayers();
+
+        /*装载lucky_fish牌风险预测模块*/
+        PredictorManager.init();
 
         logToFile("配置文件初始化完毕");
         logToFile("[DEBUG]规则配置文件信息:\n" + detectorConfig.toString());

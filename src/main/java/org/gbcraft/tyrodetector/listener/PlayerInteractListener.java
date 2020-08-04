@@ -14,10 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
-import org.gbcraft.tyrodetector.prediction.FirePredictor;
-import org.gbcraft.tyrodetector.prediction.PredictContainer;
-import org.gbcraft.tyrodetector.prediction.PredictedLevel;
-import org.gbcraft.tyrodetector.prediction.Predictor;
+import org.gbcraft.tyrodetector.prediction.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,12 +43,10 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
                 location.add(event.getBlockFace().getModX(), event.getBlockFace().getModY(), event.getBlockFace().getModZ());
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (location.getBlock().getType() == Material.FIRE) {
-                        Predictor predictor = new FirePredictor(location);
-                        PredictedLevel level = predictor.predictDamage();
-                        if (level == PredictedLevel.SERVE) {
-                            location.getBlock().setType(Material.AIR);
-                        }
-                        PredictContainer.getPredictContainer().putPredictor(player, level, predictor);
+
+                        // 火势风险预测
+                        PredictorManager.firePredict(player, location);
+
                         ItemStack item = event.getItem();
                         if (null != item) {
                             Integer limit = plugin.getDetectorConfig().getFireMap().get(item.getType().name());
