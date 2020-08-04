@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class FreezeManager {
     private static final FreezeManager freezeManager = new FreezeManager();
-    private final AttributeModifier freezeModifier = new AttributeModifier(UUID.fromString("02ecee33-9298-4785-9c34-10a6785212ed"), "ttrodetector freeze", Double.MIN_VALUE, AttributeModifier.Operation.ADD_NUMBER);
+    private final AttributeModifier freezeModifier = new AttributeModifier(UUID.fromString("02ecee33-9298-4785-9c34-10a6785212ed"), "tyrodetector freeze", Double.MIN_VALUE, AttributeModifier.Operation.ADD_NUMBER);
 
     public void freezePlayer(HumanEntity player) {
         // 冻结玩家
