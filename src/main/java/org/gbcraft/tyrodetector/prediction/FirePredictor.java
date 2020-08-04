@@ -47,7 +47,12 @@ public class FirePredictor extends Predictor {
         }
 
         for (Location surrounding : getLocationSurrounding(checkLocation)) {
-            level += checkBlock(surrounding, dejaVu);
+            try {
+                level += checkBlock(surrounding, dejaVu);
+            } catch (StackOverflowError error) {
+                // 放火烧山？
+                level = 114514;
+            }
         }
 
         return level;
