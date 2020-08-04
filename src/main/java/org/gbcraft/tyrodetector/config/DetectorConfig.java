@@ -24,11 +24,6 @@ public class DetectorConfig {
     private final Boolean debug;
     private final Integer whiteCycle;
     private final Boolean tntDupePredicate;
-    private final Map<String, Boolean> predict;
-    private final Map<String, Integer> predictLevel;
-    private final String predictSendOn;
-    private final Map<String, Integer> predictLimit;
-    private final Integer predictCycle;
 
     public DetectorConfig() {
         this.tyroHours = Integer.parseInt(ConfigReader.getParam("tyroHours"));
@@ -47,11 +42,6 @@ public class DetectorConfig {
         this.debug = Boolean.valueOf(ConfigReader.getParam("debug"));
         this.whiteCycle = Integer.parseInt(ConfigReader.getParam("whiteCycle"));
         this.tntDupePredicate = Boolean.valueOf(ConfigReader.getParam("tntDupePredicate"));
-        this.predict = ConfigReader.getParamSwitchMap("predict");
-        this.predictLevel = ConfigReader.getParamMap("predict-level");
-        this.predictSendOn = ConfigReader.getParam("predict-sendon");
-        this.predictLimit = ConfigReader.getParamMap("predict-limit");
-        this.predictCycle = Integer.parseInt(ConfigReader.getParam("predict-cycle"));
     }
 
     public Integer getTyroHours() {
@@ -114,30 +104,6 @@ public class DetectorConfig {
         return lavaBucketRange;
     }
 
-    public Boolean getTntDupePredicate() {
-        return tntDupePredicate;
-    }
-
-    public Map<String, Boolean> getPredict() {
-        return predict;
-    }
-
-    public Map<String, Integer> getPredictLevel() {
-        return predictLevel;
-    }
-
-    public String getPredictSendOn() {
-        return predictSendOn;
-    }
-
-    public Map<String, Integer> getPredictLimit() {
-        return predictLimit;
-    }
-
-    public Integer getPredictCycle() {
-        return predictCycle;
-    }
-
     @Override
     public String toString() {
         return "DetectorConfig{" +
@@ -149,16 +115,9 @@ public class DetectorConfig {
                 ", placeMap=" + placeMap +
                 ", entityCycle=" + entityCycle +
                 ", entityMap=" + entityMap +
-                ", liquidCycle=" + liquidCycle +
-                ", liquidMap=" + liquidMap +
-                ", lavaBucketRange=" + lavaBucketRange +
-                ", fireCycle=" + fireCycle +
-                ", fireMap=" + fireMap +
                 ", debug=" + debug +
                 ", whiteCycle=" + whiteCycle +
                 ", tntDupePredicate=" + tntDupePredicate +
-                ", predict=" + predict +
-                ", predictLevel=" + predictLevel +
                 '}';
     }
 }
