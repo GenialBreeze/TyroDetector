@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public final class TyroDetector extends JavaPlugin {
-
     private static TyroDetector plugin;
     private DetectorConfig detectorConfig;
     private EmailConfig emailConfig;

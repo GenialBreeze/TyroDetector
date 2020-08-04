@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.prediction.util.LocationList;
 
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class FirePredictor extends Predictor {
+public class FirePredictor implements Predictor {
     private final Location checkLocation;
 
     public FirePredictor(Location checkLocation) {
@@ -34,12 +33,14 @@ public class FirePredictor extends Predictor {
     }
 
     private int checkBlock(Location checkLocation, List<Location> dejaVu) {
+        // 重复测算，不作记录
         if (dejaVu.contains(checkLocation)) {
             return 0;
         }
         dejaVu.add(checkLocation);
 
         int level = 0;
+        // 可能会点燃tnt
         if (checkLocation.getBlock().getType() == Material.TNT) {
             level += new TntPredictor(checkLocation).predictDamageLevel();
         } else if (checkLocation.getBlock().getType().isFlammable()) {
@@ -62,7 +63,7 @@ public class FirePredictor extends Predictor {
         List<Location> surroundings = new ArrayList<>();
         for (BlockFace bf : BlockFace.values()) {
             Location loc = origin.clone().add(bf.getModX(), bf.getModY(), bf.getModZ());
-            if (loc.getBlock().getType().isFlammable()) {
+            if (loc.getBlock().getType().isFlammable()) { // 仅处理会被点燃的方块
                 surroundings.add(loc);
             }
         }
@@ -73,9 +74,9 @@ public class FirePredictor extends Predictor {
     public String toEmailContent(HumanEntity player, PredictedLevel cache) {
         String loc = "(X:" + checkLocation.getBlockX() + ",Z:" + checkLocation.getBlockZ() + ",Y:" + checkLocation.getBlockY() + ")";
         return player.getWorld().getName() +
-                " 生火 " +
+                " 生火于 " +
                 " " + new SimpleDateFormat("HH:mm").format(new Date()) +
                 " " + loc +
-                " 严重性：" + cache;
+                " 严重性预测 " + cache;
     }
 }

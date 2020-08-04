@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class TntPredictor extends Predictor {
+public class TntPredictor implements Predictor {
     private final Location checkLocation;
 
     public TntPredictor(Location checkLocation) {
@@ -43,6 +43,7 @@ public class TntPredictor extends Predictor {
         dejaVu.add(checkLocation);
         int damageLevel = 0;
 
+        // 此段代码以模拟mc中的爆炸
         // 代码来自mojang
         // 不要打我
         for (int x = 0; x < 16; ++x) {
@@ -56,6 +57,7 @@ public class TntPredictor extends Predictor {
                         dx /= distance;
                         dy /= distance;
                         dz /= distance;
+                        // 去除随机性，模拟此次爆炸中最糟情况
                         float modifiedRadius = 4 * 1.3f;
                         double checkX = checkLocation.getX();
                         double checkY = checkLocation.getY();
@@ -85,14 +87,15 @@ public class TntPredictor extends Predictor {
             }
         }
 
+        // 结算破坏情况
         for (Block block : blockSet) {
             Location blockLocation = block.getLocation();
             Material type = blockLocation.getBlock().getType();
             if (MaterialUtil.isRedstoneBlock(type)) {
-                damageLevel += 4;
-            } else {
                 if (type == Material.TNT) {
                     try {
+                        // 爆炸会扩散，但无法预测tnt实体之间的弹射
+                        // 故此类破坏无法预测最糟情况
                         damageLevel += checkBlockBeingBreaked(blockLocation, dejaVu);
                     } catch (StackOverflowError e) {
                         // 看来是tnt太多了
@@ -100,6 +103,8 @@ public class TntPredictor extends Predictor {
                         e.printStackTrace();
                     }
                 }
+                damageLevel += 4;
+            } else {
                 damageLevel += 2;
             }
         }
@@ -111,9 +116,9 @@ public class TntPredictor extends Predictor {
     public String toEmailContent(HumanEntity player, PredictedLevel cache) {
         String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
         return player.getWorld().getName() +
-                " 放置 TNT" +
+                " 放置 TNT 于 " +
                 " " + new SimpleDateFormat("HH:mm").format(new Date()) +
                 " " + loc +
-                " 严重性 " + cache;
+                " 严重性预测 " + cache;
     }
 }

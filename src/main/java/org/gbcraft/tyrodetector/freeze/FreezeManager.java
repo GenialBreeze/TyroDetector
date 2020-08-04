@@ -3,8 +3,6 @@ package org.gbcraft.tyrodetector.freeze;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.HumanEntity;
-import org.gbcraft.tyrodetector.email.EmailInfo;
-import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.help.ChatMessageHelper;
 
 import java.util.UUID;
@@ -16,8 +14,7 @@ public class FreezeManager {
     public void freezePlayer(HumanEntity player) {
         // 冻结玩家
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(freezeModifier);
-        player.sendMessage(ChatMessageHelper.getMsg("&c你在玩火，请找Frea_(1376779028)解释吧"));
-        EmailManager.getManager().append(player, new EmailInfo("因执行沙皇级别操作而遭到冻结，请及时与之取得联系"));
+        player.sendMessage(ChatMessageHelper.getMsg("&c你在玩沙皇氢弹，请找管理员解释吧"));
     }
     public void thawPlayer(HumanEntity player) {
         // 解冻玩家

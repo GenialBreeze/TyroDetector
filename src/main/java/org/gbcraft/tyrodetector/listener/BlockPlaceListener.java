@@ -1,10 +1,8 @@
 package org.gbcraft.tyrodetector.listener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +10,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
-import org.gbcraft.tyrodetector.prediction.*;
+import org.gbcraft.tyrodetector.prediction.PredictorManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

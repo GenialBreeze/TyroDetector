@@ -56,6 +56,7 @@ predict:
 # 严重性预测判别等级
 # 误报请适当调高以下值
 # 可能存在一定的误报/漏报
+# 单位未知（雾
 predict-level:
   NONE: 0
   LOW: 50
@@ -73,6 +74,7 @@ predict-sendon: HIGH
 # 故在其累积到一定程度时发送预警
 # 格式： 等级: 次数
 # NONE级别不计入警告
+# 出现没有出现在配置里的等级（即既低于predict-sendon又没有在下表中出现的等级）不会被发送
 predict-limit:
   LOW: 15
   NORMAL: 5

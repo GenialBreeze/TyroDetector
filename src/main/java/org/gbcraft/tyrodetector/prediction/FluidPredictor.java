@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.prediction.util.LocationList;
 
@@ -13,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class FluidPredictor extends Predictor {
+public class FluidPredictor implements Predictor {
     private final Location predictLocation;
     private final Material predictFluid;
 
@@ -36,8 +35,10 @@ public class FluidPredictor extends Predictor {
         List<Location> loggedLocation = new LocationList();
         List<Location> destroyedBlock = new LocationList();
 
+        // 放置源头，进行流体流动预测
         checkFlowLocation(predictLocation, false, 8, loggedLocation, destroyedBlock);
 
+        // 计算流体流动过程中会造成的破坏
         int level = 0;
         for (Location location : destroyedBlock) {
             if (MaterialUtil.isRedstoneBlock(location.getBlock().getType())) {
@@ -47,6 +48,7 @@ public class FluidPredictor extends Predictor {
         }
         level += loggedLocation.size();
 
+        // 预测流体可能造成的物理现象造成的最坏破坏
         for (Location location : loggedLocation) {
             level += checkSurroundings(location);
         }
@@ -60,15 +62,18 @@ public class FluidPredictor extends Predictor {
         }
         loggedLocation.add(checkLocation);
 
+        // 预测会摧毁方块
         if (!checkLocation.getBlock().getType().isAir()) {
             destroyedBlock.add(checkLocation);
         }
 
+        // 模拟流体能流动的距离
         int loss = 1;
         if (predictFluid == Material.LAVA && checkLocation.getWorld().getEnvironment() != World.Environment.NETHER) {
             loss = 3;
         }
 
+        // 检测是否为竖直向下
         boolean willFall = checkFlowLocation(checkLocation.clone().add(0, -1, 0), true, 8, loggedLocation, destroyedBlock);
         if (!(willFall && fall)) {
             // x+
@@ -94,9 +99,10 @@ public class FluidPredictor extends Predictor {
                 for (int y = -2; y <= 2; y++) {
                     for (int z = -2; z <= 2; z++) {
                         Location checkLocation = location.clone().add(x, y, z);
+                        // 岩浆可能会引燃tnt
                         if (checkLocation.getBlock().getType() == Material.TNT) {
                             predictLevel += new TntPredictor(checkLocation).predictDamageLevel();
-                        } else if (checkLocation.getBlock().getType().isFlammable()) {
+                        } else if (checkLocation.getBlock().getType().isFlammable()) { // 同样岩浆会点燃可燃方块
                             predictLevel += new FirePredictor(checkLocation).predictDamageLevel();
                         }
                     }
@@ -112,8 +118,8 @@ public class FluidPredictor extends Predictor {
         String loc = "(X:" + predictLocation.getBlockX() + ",Z:" + predictLocation.getBlockZ() + ",Y:" + predictLocation.getBlockY() + ")";
         return player.getWorld().getName() +
                 " 放置 " + predictFluid.name() +
-                " " + new SimpleDateFormat("HH:mm").format(new Date()) +
+                " 于 " + new SimpleDateFormat("HH:mm").format(new Date()) +
                 " " + loc +
-                " 严重性 " + cache;
+                " 严重性预测 " + cache;
     }
 }
