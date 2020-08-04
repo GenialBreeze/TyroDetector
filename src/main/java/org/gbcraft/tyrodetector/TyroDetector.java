@@ -16,6 +16,7 @@ import org.gbcraft.tyrodetector.help.PlanTimeHelper;
 import org.gbcraft.tyrodetector.help.TimeHelperManager;
 import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 import org.gbcraft.tyrodetector.listener.*;
+import org.gbcraft.tyrodetector.prediction.PredictContainer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -124,6 +125,8 @@ public final class TyroDetector extends JavaPlugin {
         }, detectorConfig.getWhiteCycle() * 1200L, detectorConfig.getWhiteCycle() * 1200L);
 
         cycle = whiteCycleTask.isCancelled();
+
+        PredictContainer.init();
         logToFile("[DEBUG]白名单周期是否被取消: " + cycle);
     }
 
