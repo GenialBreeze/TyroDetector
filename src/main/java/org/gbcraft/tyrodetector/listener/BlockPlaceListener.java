@@ -13,6 +13,7 @@ import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.prediction.PredictContainer;
+import org.gbcraft.tyrodetector.prediction.PredictedLevel;
 import org.gbcraft.tyrodetector.prediction.Predictor;
 import org.gbcraft.tyrodetector.prediction.TntPredictor;
 
@@ -51,8 +52,13 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
         if (block.getType() == Material.TNT) {
             PredictContainer pc = PredictContainer.getPredictContainer();
             Predictor predictor = new TntPredictor(block.getLocation());
+            PredictedLevel level = predictor.predictDamage();
 
-            pc.putPredictor(player, predictor.predictDamage(), predictor);
+            if (level == PredictedLevel.SERVE) {
+                event.setCancelled(true);
+            }
+
+            pc.putPredictor(player, level, predictor);
 
             if (TyroDetector.getPlugin().getDetectorConfig().getTntDupePredicate()) {
                 Location detectLocation = block.getLocation();

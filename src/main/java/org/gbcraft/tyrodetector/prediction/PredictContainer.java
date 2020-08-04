@@ -5,6 +5,7 @@ import org.bukkit.entity.HumanEntity;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
+import org.gbcraft.tyrodetector.freeze.FreezeManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,10 @@ public class PredictContainer {
         if (PredictedLevel.valueOf(plugin.getDetectorConfig().getPredictSendOn()).ordinal() <= level.ordinal()) {
             // 还记啥记啊，赶紧报警
             sendEmergencyEmail(player, predictor, level);
+            // 严重程度过高，冻结玩家
+            if (level == PredictedLevel.SERVE) {
+                FreezeManager.getFreezeManager().freezePlayer(player);
+            }
             return;
         }
 

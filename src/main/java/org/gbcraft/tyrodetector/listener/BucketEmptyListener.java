@@ -15,6 +15,7 @@ import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.prediction.FluidPredictor;
 import org.gbcraft.tyrodetector.prediction.PredictContainer;
+import org.gbcraft.tyrodetector.prediction.PredictedLevel;
 import org.gbcraft.tyrodetector.prediction.Predictor;
 
 import java.text.SimpleDateFormat;
@@ -50,7 +51,11 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
         boolean isLava = false;
         boolean isFlame = false;
         Predictor predictor = new FluidPredictor(event.getBlockClicked().getLocation().clone().add(event.getBlockFace().getDirection()), bucket == Material.LAVA_BUCKET ? Material.LAVA : Material.WATER);
-        PredictContainer.getPredictContainer().putPredictor(player, predictor.predictDamage(), predictor);
+        PredictedLevel level = predictor.predictDamage();
+        if (level == PredictedLevel.SERVE) {
+            event.setCancelled(true);
+        }
+        PredictContainer.getPredictContainer().putPredictor(player, level, predictor);
         if (bucket == Material.LAVA_BUCKET) {
             isLava = true;
             isFlame = isFlame(event);

@@ -76,8 +76,6 @@ public final class TyroDetector extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new ConfigBoxListener(this), this);
 
-        PredictContainer.init();
-
         /*注册命令执行器*/
         TDCommandExecutor executor = new TDCommandExecutor(plugin);
         PluginCommand tyro = Bukkit.getPluginCommand("tyro");
@@ -127,6 +125,8 @@ public final class TyroDetector extends JavaPlugin {
         }, detectorConfig.getWhiteCycle() * 1200L, detectorConfig.getWhiteCycle() * 1200L);
 
         cycle = whiteCycleTask.isCancelled();
+
+        PredictContainer.init();
         logToFile("[DEBUG]白名单周期是否被取消: " + cycle);
     }
 
