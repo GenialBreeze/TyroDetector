@@ -2,6 +2,7 @@ package org.gbcraft.tyrodetector.command;
 
 import org.bukkit.command.CommandSender;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.help.ChatMessageHelper;
 import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public class WhiteCommand extends TDCommand {
                 case "add":
                     plugin.getWhiteListConfig().append(args[2]);
                     TyroPlayersManager.tryRemove(args[2]);
+                    sender.sendMessage(ChatMessageHelper.getMsg("&2添加成功!"));
                     break;
                 case "remove":
                     plugin.getWhiteListConfig().remove(args[2]);
