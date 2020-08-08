@@ -36,7 +36,7 @@ public class FluidPredictor implements Predictor {
         List<Location> destroyedBlock = new LocationList();
 
         // 放置源头，进行流体流动预测
-        checkFlowLocation(predictLocation, false, 8, loggedLocation, destroyedBlock);
+        checkFlowLocation(predictLocation, true, 8, loggedLocation, destroyedBlock);
 
         // 计算流体流动过程中会造成的破坏
         int level = 0;
@@ -56,9 +56,12 @@ public class FluidPredictor implements Predictor {
         return level;
     }
 
-    private boolean checkFlowLocation(Location checkLocation, boolean fall, int level, List<Location> loggedLocation, List<Location> destroyedBlock) {
-        if (!MaterialUtil.canReplaceByLiquid(checkLocation.getBlock().getType()) || checkLocation.getY() < 0 || level <= 0 || loggedLocation.contains(checkLocation)) {
+    private boolean checkFlowLocation(Location checkLocation, boolean source, int level, List<Location> loggedLocation, List<Location> destroyedBlock) {
+        if (!MaterialUtil.canReplaceByLiquid(checkLocation.getBlock().getType()) || (MaterialUtil.isLiquid(checkLocation.getBlock().getType()) && !source)) {
             return false;
+        }
+        if (checkLocation.getY() < 0 || level <= 0 || loggedLocation.contains(checkLocation)) {
+            return true;
         }
         loggedLocation.add(checkLocation);
 
@@ -74,16 +77,16 @@ public class FluidPredictor implements Predictor {
         }
 
         // 检测是否为竖直向下
-        boolean willFall = checkFlowLocation(checkLocation.clone().add(0, -1, 0), true, 8, loggedLocation, destroyedBlock);
-        if (!(willFall && fall)) {
+        boolean willFall = checkFlowLocation(checkLocation.clone().add(0, -1, 0), false, 8, loggedLocation, destroyedBlock);
+        if (source || (!willFall)) {
             // x+
-            checkFlowLocation(checkLocation.clone().add(1, 0, 0), fall, level - loss, loggedLocation, destroyedBlock);
+            checkFlowLocation(checkLocation.clone().add(1, 0, 0), false, level - loss, loggedLocation, destroyedBlock);
             // x-
-            checkFlowLocation(checkLocation.clone().add(-1, 0, 0), fall, level - loss, loggedLocation, destroyedBlock);
+            checkFlowLocation(checkLocation.clone().add(-1, 0, 0), false, level - loss, loggedLocation, destroyedBlock);
             // z+
-            checkFlowLocation(checkLocation.clone().add(0, 0, 1), fall, level - loss, loggedLocation, destroyedBlock);
+            checkFlowLocation(checkLocation.clone().add(0, 0, 1), false, level - loss, loggedLocation, destroyedBlock);
             // z-
-            checkFlowLocation(checkLocation.clone().add(0, 0, -1), fall, level - loss, loggedLocation, destroyedBlock);
+            checkFlowLocation(checkLocation.clone().add(0, 0, -1), false, level - loss, loggedLocation, destroyedBlock);
         }
 
         return true;

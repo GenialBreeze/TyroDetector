@@ -59,9 +59,9 @@ predict:
 # 单位未知（雾
 predict-level:
   NONE: 0
-  LOW: 50
-  NORMAL: 100
-  HIGH: 200
+  LOW: 100
+  NORMAL: 200
+  HIGH: 400
 # 当严重性预测到达一定程度时则立即发送邮件
 # 允许的值：
 # NONE - 人畜无害
