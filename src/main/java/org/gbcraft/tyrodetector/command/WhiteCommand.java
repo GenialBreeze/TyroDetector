@@ -36,9 +36,7 @@ public class WhiteCommand extends TDCommand {
                 case "list":
                     sender.sendMessage(Arrays.toString(plugin.getWhiteListConfig().list()));
                     StringBuilder builder = new StringBuilder();
-                    plugin.getTyroPlayers().forEach((k, v) -> {
-                        builder.append(v.getName());
-                    });
+                    plugin.getTyroPlayers().forEach((k, v) -> builder.append(v.getName()));
                     sender.sendMessage("[DEBUG]这里是当前监测玩家" + builder.toString());
                     break;
                 default:

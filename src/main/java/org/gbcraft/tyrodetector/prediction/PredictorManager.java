@@ -29,6 +29,8 @@ public class PredictorManager {
         Predictor predictor = new TntPredictor(block.getLocation());
         PredictedLevel level = predictor.predictDamage();
 
+        plugin.logToFile("预测TNT危害等级: " + predictor.predictDamageLevel() + "，判定程度: " + level);
+
         if (level == PredictedLevel.SERVE) {
             // 预测到的风险过大，不允许放置
             event.setCancelled(true);
@@ -71,6 +73,7 @@ public class PredictorManager {
     public static void fluidPredict(HumanEntity player, Material bucket, PlayerBucketEmptyEvent event){
         Predictor predictor = new FluidPredictor(event.getBlockClicked().getLocation().clone().add(event.getBlockFace().getDirection()), bucket == Material.LAVA_BUCKET ? Material.LAVA : Material.WATER);
         PredictedLevel level = predictor.predictDamage();
+        plugin.logToFile("预测流体危害等级: " + predictor.predictDamageLevel() + "，判定程度: " + level);
         if (level == PredictedLevel.SERVE) {
             // 预测到的风险过大，不允许放置
             event.setCancelled(true);
@@ -81,6 +84,7 @@ public class PredictorManager {
     public static void firePredict(HumanEntity player, Location location){
         Predictor predictor = new FirePredictor(location);
         PredictedLevel level = predictor.predictDamage();
+        plugin.logToFile("预测火焰危害等级: " + predictor.predictDamageLevel() + "，判定程度: " + level);
         if (level == PredictedLevel.SERVE) {
             // 预测到的风险过大，但已经点了火，灭火
             // 损失的耐久应该嘛事
