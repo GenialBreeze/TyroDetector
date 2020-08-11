@@ -16,11 +16,11 @@ public class ThawCommand extends TDCommand {
     @Override
     protected void run() {
         if (sender.hasPermission("tyro.thaw")) {
-            if (args.length != 1) {
+            if (args.length != 2) {
                 sender.sendMessage(ChatMessageHelper.getMsg("&c用法：/tyro thaw <你要解冻的玩家>"));
                 return;
             }
-            Player p = Bukkit.getPlayer(args[0]);
+            Player p = Bukkit.getPlayer(args[1]);
             if (p == null) {
                 sender.sendMessage(ChatMessageHelper.getMsg("&c你所指的玩家是谁，他/她不在服务器上"));
                 return;
