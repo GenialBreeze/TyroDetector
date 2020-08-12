@@ -29,6 +29,7 @@ public class DetectorConfig {
     private final String predictSendOn;
     private final Map<String, Integer> predictLimit;
     private final Integer predictCycle;
+    private final Boolean freezeOnServe;
 
     public DetectorConfig() {
         this.tyroHours = Integer.parseInt(ConfigReader.getParam("tyroHours"));
@@ -52,6 +53,7 @@ public class DetectorConfig {
         this.predictSendOn = ConfigReader.getParam("predict-sendon");
         this.predictLimit = ConfigReader.getParamMap("predict-limit");
         this.predictCycle = Integer.parseInt(ConfigReader.getParam("predict-cycle"));
+        this.freezeOnServe = Boolean.valueOf(ConfigReader.getParam("freeze-on-serve"));
     }
 
     public Integer getTyroHours() {
@@ -136,6 +138,10 @@ public class DetectorConfig {
 
     public Integer getPredictCycle() {
         return predictCycle;
+    }
+
+    public Boolean getFreezeOnServe() {
+        return freezeOnServe;
     }
 
     @Override

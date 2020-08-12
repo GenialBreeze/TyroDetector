@@ -24,7 +24,7 @@ public class PredictContainer {
             // 还记啥记啊，赶紧报警
             sendEmergencyEmail(player, predictor, level);
             // 严重程度过高，冻结玩家
-            if (level == PredictedLevel.SERVE) {
+            if (level == PredictedLevel.SERVE && TyroDetector.getPlugin().getDetectorConfig().getFreezeOnServe()) {
                 FreezeManager.getFreezeManager().freezePlayer(player);
             }
             return;
