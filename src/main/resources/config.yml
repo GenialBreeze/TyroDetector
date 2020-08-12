@@ -80,6 +80,8 @@ predict-limit:
   NORMAL: 5
 # 统计风险操作的周期（分钟)
 predict-cycle: 5
+# 先 斩 后 奏开关
+freeze-on-serve: false
 
 #启用日志, 日志文件在配置文件中, 多个日志会自动重命名不会覆盖, 其中包含调试信息
 debug: false
