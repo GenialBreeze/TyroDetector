@@ -13,11 +13,7 @@ public class PlayersConfig {
     public PlayersConfig() {
         this.players = ConfigReader.getPlayers();
         memToLeader = new HashMap<>();
-        players.forEach((k, v) -> {
-            v.forEach(m -> {
-                memToLeader.put(m, k);
-            });
-        });
+        players.forEach((k, v) -> v.forEach(m -> memToLeader.put(m, k)));
     }
 
     public boolean isPartner(UUID p1, UUID p2) {
@@ -106,9 +102,7 @@ public class PlayersConfig {
         if (null != members && !members.isEmpty()) {
             res.append("队长: ").append(NameUUIDHelper.getName(leader));
             res.append("\n 队员:");
-            members.forEach(m -> {
-                res.append(NameUUIDHelper.getName(m)).append(" ");
-            });
+            members.forEach(m -> res.append(NameUUIDHelper.getName(m)).append(" "));
         }
         else {
             res.append("无");

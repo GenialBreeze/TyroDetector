@@ -31,11 +31,13 @@ public class EmailInfo {
         return content;
     }
 
+    // 添加一次邮件内容并增加该邮件的生命周期
     public void appendContent(String content) {
         this.content += "\n" + content;
         this.age++;
     }
 
+    // 加入新的邮件内容但不影响生命周期
     public void fixAddContent(String content){
         this.content += "\n" + content;
     }

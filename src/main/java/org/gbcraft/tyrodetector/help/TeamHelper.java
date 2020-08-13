@@ -34,14 +34,14 @@ public class TeamHelper {
     }
 
     public static void setRequests(Player member, OfflinePlayer leader, Player sender) {
-        String inviteMsg = "&4你收到了来自 " + leader + " 的组队邀请. 回复&b/tyro yes&4接受邀请. 将在&c 60s &4后自动过期";
+        String inviteMsg = "&4你收到了来自 " + leader.getName() + " 的组队邀请. 回复&b/tyro yes&4接受邀请. 将在&c 60s &4后自动过期";
         String sendSucMsg = "&c邀请发送成功";
         sender.sendMessage(ChatMessageHelper.getMsg(sendSucMsg));
         member.sendMessage(ChatMessageHelper.getMsg(inviteMsg));
 
         memToLeaRequests.put(member.getUniqueId(), leader.getUniqueId());
         BukkitTask outTimeTask = Bukkit.getScheduler().runTaskLaterAsynchronously(TyroDetector.getPlugin(), () -> {
-            String timeOutMsg = "&c向玩家" + member + "发送的邀请已过期";
+            String timeOutMsg = "&c向玩家" + member.getName() + "发送的邀请已过期";
             if (sender.isOnline()) {
                 sender.sendMessage(ChatMessageHelper.getMsg(timeOutMsg));
             }

@@ -3,9 +3,7 @@ package org.gbcraft.tyrodetector.email;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.gbcraft.tyrodetector.TyroDetector;
-import org.gbcraft.tyrodetector.config.PlayersConfig;
 import org.gbcraft.tyrodetector.help.TimeHelperManager;
-import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +19,31 @@ public class EmailManager {
 
     public static EmailManager getManager() {
         return manager;
+    }
+
+    /**
+     * 添加一封有关{@param player}的邮件 并在添加后立刻发送
+     *
+     * @param player 邮件描述的玩家
+     */
+    public void urgentAppend(HumanEntity player, EmailInfo info) {
+        EmailInfo emailInfo = emails.get(player);
+        if (null == emailInfo) {
+            emailInfo = info;
+            emails.put(player, info);
+        }
+        else {
+            // 如果存在关于该玩家的邮件，则将内容整合进已存在的邮件中
+            emailInfo.appendContent(info.getContent());
+        }
+        String leader = TyroDetector.getPlugin().getPlayersConfig().getLeader(player.getUniqueId());
+        emailInfo.setTitle(
+                "来自风险预测模块的紧急邮件 - " + player.getName() +
+                        " - " + TimeHelperManager.getPlayHours(player.getName()) +
+                        "小时 " + "队长: " + leader);
+        emailInfo.fixAddContent("队伍信息\n" + TyroDetector.getPlugin().getPlayersConfig().getPartyInfo(player.getUniqueId()));
+        send(emailInfo);
+        emails.remove(player);
     }
 
     /**

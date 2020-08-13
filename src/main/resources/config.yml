@@ -47,5 +47,41 @@ tntDupePredicate: true
 #白名单尝试松弛周期 (分钟) 每隔一段时间尝试将游玩时限已达监测时限的玩家移除白名单
 whiteCycle: 60
 
+# 预测操作可能造成的后果
+# 可能会对服务器造成较大负担
+predict:
+  fire: true
+  fluid: true
+  tnt: true
+# 严重性预测判别等级
+# 误报请适当调高以下值
+# 可能存在一定的误报/漏报
+# 单位未知（雾
+predict-level:
+  NONE: 0
+  LOW: 100
+  NORMAL: 200
+  HIGH: 400
+# 当严重性预测到达一定程度时则立即发送邮件
+# 允许的值：
+# NONE - 人畜无害
+# LOW - 危害性较小
+# NORMAL - 危害中等
+# HIGH - 危害严重
+# SERVE - 沙皇
+predict-sendon: HIGH
+# 低危害的操作累积起来也可能会造成严重的危害
+# 故在其累积到一定程度时发送预警
+# 格式： 等级: 次数
+# NONE级别不计入警告
+# 出现没有出现在配置里的等级（即既低于predict-sendon又没有在下表中出现的等级）不会被发送
+predict-limit:
+  LOW: 15
+  NORMAL: 5
+# 统计风险操作的周期（分钟)
+predict-cycle: 5
+# 先 斩 后 奏开关
+freeze-on-serve: false
+
 #启用日志, 日志文件在配置文件中, 多个日志会自动重命名不会覆盖, 其中包含调试信息
 debug: false

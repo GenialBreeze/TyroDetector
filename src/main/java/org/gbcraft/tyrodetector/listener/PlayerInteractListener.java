@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
+import org.gbcraft.tyrodetector.prediction.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,9 +40,12 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
             Block clickedBlock = event.getClickedBlock();
             if (null != clickedBlock) {
                 Location location = clickedBlock.getLocation().clone();
-                location.add(0, 1, 0);
+                location.add(event.getBlockFace().getModX(), event.getBlockFace().getModY(), event.getBlockFace().getModZ());
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (location.getBlock().getType() == Material.FIRE) {
+                        // 火势风险预测
+                        PredictorManager.firePredict(player, location);
+
                         ItemStack item = event.getItem();
                         if (null != item) {
                             Integer limit = plugin.getDetectorConfig().getFireMap().get(item.getType().name());

@@ -3,14 +3,11 @@ package org.gbcraft.tyrodetector.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.command.ConfigCommand;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -61,9 +58,7 @@ public class ConfigWriter {
         File file = new File(TyroDetector.getPlugin().getDataFolder(), "players.yml");
         FileConfiguration players = YamlConfiguration.loadConfiguration(file);
         List<String> uuids = new ArrayList<>();
-        list.forEach(u -> {
-            uuids.add(u.toString());
-        });
+        list.forEach(u -> uuids.add(u.toString()));
         players.set(root.toString(), uuids);
         try {
             players.save(file);
@@ -87,9 +82,7 @@ public class ConfigWriter {
             try {
                 file.createNewFile();
                 FileConfiguration ioHelper = YamlConfiguration.loadConfiguration(file);
-                content.forEach((k, v) -> {
-                    ioHelper.set("list." + k, v);
-                });
+                content.forEach((k, v) -> ioHelper.set("list." + k, v));
                 ioHelper.save(file);
             }
             catch (Exception e) {
