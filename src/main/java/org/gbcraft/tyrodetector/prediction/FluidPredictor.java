@@ -61,7 +61,7 @@ public class FluidPredictor implements Predictor {
     }
 
     private boolean checkFlowLocation(Location checkLocation, boolean source, int level, List<Location> loggedLocation, List<Location> destroyedBlock) {
-        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability()) {
+        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability() + 20) {
             throw new StackOverflowError("Too much!");
         }
 

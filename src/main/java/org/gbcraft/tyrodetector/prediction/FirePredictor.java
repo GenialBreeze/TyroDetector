@@ -37,7 +37,7 @@ public class FirePredictor implements Predictor {
     }
 
     private int checkBlock(Location checkLocation, List<Location> dejaVu) {
-        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability()) {
+        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability() + 20) {
             return 114514;
         }
 
@@ -60,7 +60,7 @@ public class FirePredictor implements Predictor {
                 level += checkBlock(surrounding, dejaVu);
             } catch (StackOverflowError error) {
                 // 放火烧山？
-                level = 114514;
+                return 114514;
             }
         }
 

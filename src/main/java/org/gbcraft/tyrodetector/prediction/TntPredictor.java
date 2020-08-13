@@ -39,7 +39,7 @@ public class TntPredictor implements Predictor {
     }
 
     private int checkBlockBeingBreaked(Location checkLocation, List<Location> dejaVu) {
-        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability()) {
+        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability() + 20) {
             return 114514;
         }
 
@@ -107,8 +107,7 @@ public class TntPredictor implements Predictor {
                         damageLevel += checkBlockBeingBreaked(blockLocation, dejaVu);
                     } catch (StackOverflowError e) {
                         // 看来是tnt太多了
-                        damageLevel = 114514;
-                        e.printStackTrace();
+                        return 114514;
                     }
                 }
                 damageLevel += 4;
