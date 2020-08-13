@@ -32,31 +32,39 @@ public class FluidPredictor implements Predictor {
 
     @Override
     public int predictDamageLevel() {
-        List<Location> loggedLocation = new LocationList();
-        List<Location> destroyedBlock = new LocationList();
+        try {
+            List<Location> loggedLocation = new LocationList();
+            List<Location> destroyedBlock = new LocationList();
 
-        // 放置源头，进行流体流动预测
-        checkFlowLocation(predictLocation, true, 8, loggedLocation, destroyedBlock);
+            // 放置源头，进行流体流动预测
+            checkFlowLocation(predictLocation, true, 8, loggedLocation, destroyedBlock);
 
-        // 计算流体流动过程中会造成的破坏
-        int level = 0;
-        for (Location location : destroyedBlock) {
-            if (MaterialUtil.isRedstoneBlock(location.getBlock().getType())) {
-                level += 4;
+            // 计算流体流动过程中会造成的破坏
+            int level = 0;
+            for (Location location : destroyedBlock) {
+                if (MaterialUtil.isRedstoneBlock(location.getBlock().getType())) {
+                    level += 4;
+                }
+                level += 2;
             }
-            level += 2;
-        }
-        level += loggedLocation.size();
+            level += loggedLocation.size();
 
-        // 预测流体可能造成的物理现象造成的最坏破坏
-        for (Location location : loggedLocation) {
-            level += checkSurroundings(location);
-        }
+            // 预测流体可能造成的物理现象造成的最坏破坏
+            for (Location location : loggedLocation) {
+                level += checkSurroundings(location);
+            }
 
-        return level;
+            return level;
+        } catch (StackOverflowError err) {
+            return 114514;
+        }
     }
 
     private boolean checkFlowLocation(Location checkLocation, boolean source, int level, List<Location> loggedLocation, List<Location> destroyedBlock) {
+        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability()) {
+            throw new StackOverflowError("Too much!");
+        }
+
         if (!MaterialUtil.canReplaceByLiquid(checkLocation.getBlock().getType()) || (MaterialUtil.isLiquid(checkLocation.getBlock().getType()) && !source)) {
             return false;
         }

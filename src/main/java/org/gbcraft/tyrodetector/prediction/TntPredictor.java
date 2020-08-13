@@ -31,10 +31,18 @@ public class TntPredictor implements Predictor {
 
     @Override
     public int predictDamageLevel() {
-        return checkBlockBeingBreaked(checkLocation, new LocationList());
+        try {
+            return checkBlockBeingBreaked(checkLocation, new LocationList());
+        } catch (StackOverflowError err) {
+            return 114514;
+        }
     }
 
     private int checkBlockBeingBreaked(Location checkLocation, List<Location> dejaVu) {
+        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability()) {
+            return 114514;
+        }
+
         Set<Block> blockSet = new HashSet<>();
         // 避免出现来回检测
         if (dejaVu.contains(checkLocation)) {
