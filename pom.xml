@@ -6,7 +6,7 @@
 
     <groupId>org.gbcraft</groupId>
     <artifactId>TyroDetector</artifactId>
-    <version>5.0.5-ALPHA</version>
+    <version>5.0.6-ALPHA</version>
     <packaging>jar</packaging>
 
     <name>TyroDetector</name>

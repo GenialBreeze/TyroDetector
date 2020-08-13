@@ -34,7 +34,7 @@ public class TeamHelper {
     }
 
     public static void setRequests(Player member, OfflinePlayer leader, Player sender) {
-        String inviteMsg = "&4你收到了来自 " + leader + " 的组队邀请. 回复&b/tyro yes&4接受邀请. 将在&c 60s &4后自动过期";
+        String inviteMsg = "&4你收到了来自 " + leader.getName() + " 的组队邀请. 回复&b/tyro yes&4接受邀请. 将在&c 60s &4后自动过期";
         String sendSucMsg = "&c邀请发送成功";
         sender.sendMessage(ChatMessageHelper.getMsg(sendSucMsg));
         member.sendMessage(ChatMessageHelper.getMsg(inviteMsg));
