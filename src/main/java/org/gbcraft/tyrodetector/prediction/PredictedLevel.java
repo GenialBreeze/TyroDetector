@@ -37,4 +37,8 @@ public enum PredictedLevel {
             return SERVE;
         }
     }
+
+    public int getMaxProbability() {
+        return maxProbability;
+    }
 }

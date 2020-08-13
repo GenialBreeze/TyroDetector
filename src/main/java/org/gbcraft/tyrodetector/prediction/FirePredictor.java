@@ -29,10 +29,18 @@ public class FirePredictor implements Predictor {
 
     @Override
     public int predictDamageLevel() {
-        return checkBlock(checkLocation, new LocationList());
+        try {
+            return checkBlock(checkLocation, new LocationList());
+        } catch (StackOverflowError err) {
+            return 114514;
+        }
     }
 
     private int checkBlock(Location checkLocation, List<Location> dejaVu) {
+        if (Thread.currentThread().getStackTrace().length >= PredictedLevel.HIGH.getMaxProbability() + 20) {
+            return 114514;
+        }
+
         // 重复测算，不作记录
         if (dejaVu.contains(checkLocation)) {
             return 0;
@@ -52,7 +60,7 @@ public class FirePredictor implements Predictor {
                 level += checkBlock(surrounding, dejaVu);
             } catch (StackOverflowError error) {
                 // 放火烧山？
-                level = 114514;
+                return 114514;
             }
         }
 
