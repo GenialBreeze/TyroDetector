@@ -31,10 +31,6 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
     public void onBlockPlace(BlockPlaceEvent event) {
         HumanEntity player = event.getPlayer();
         Block block = event.getBlockPlaced();
-        // TNT相关风险预测
-        if (block.getType() == Material.TNT) {
-            PredictorManager.tntPredict(player, block, event);
-        }
 
         // 判定不在监测范围的玩家
         if (!plugin.getTyroPlayers().containsKey(event.getPlayer().getUniqueId())) {
@@ -46,6 +42,11 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
             plugin.logToFile("[DEBUG]发现需要监测的方块被放置 - " + player.getName());
 
             joinContainers(player, block, limit);
+        }
+
+        // TNT相关风险预测
+        if (block.getType() == Material.TNT) {
+            PredictorManager.tntPredict(player, block, event);
         }
     }
 
