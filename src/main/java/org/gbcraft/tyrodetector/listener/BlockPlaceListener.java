@@ -29,24 +29,23 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        HumanEntity player = event.getPlayer();
+        Block block = event.getBlockPlaced();
+        // TNT相关风险预测
+        if (block.getType() == Material.TNT) {
+            PredictorManager.tntPredict(player, block, event);
+        }
+
         // 判定不在监测范围的玩家
         if (!plugin.getTyroPlayers().containsKey(event.getPlayer().getUniqueId())) {
             return;
         }
-        HumanEntity player = event.getPlayer();
-        Block block = event.getBlockPlaced();
-
         Integer limit = plugin.getDetectorConfig().getPlaceMap().get(block.getType().name());
         //如果是需要监测的方块
         if (null != limit) {
             plugin.logToFile("[DEBUG]发现需要监测的方块被放置 - " + player.getName());
 
             joinContainers(player, block, limit);
-        }
-
-        // TNT相关风险预测
-        if (block.getType() == Material.TNT) {
-            PredictorManager.tntPredict(player, block, event);
         }
     }
 
