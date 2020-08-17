@@ -29,13 +29,13 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        HumanEntity player = event.getPlayer();
+        Block block = event.getBlockPlaced();
+
         // 判定不在监测范围的玩家
         if (!plugin.getTyroPlayers().containsKey(event.getPlayer().getUniqueId())) {
             return;
         }
-        HumanEntity player = event.getPlayer();
-        Block block = event.getBlockPlaced();
-
         Integer limit = plugin.getDetectorConfig().getPlaceMap().get(block.getType().name());
         //如果是需要监测的方块
         if (null != limit) {
