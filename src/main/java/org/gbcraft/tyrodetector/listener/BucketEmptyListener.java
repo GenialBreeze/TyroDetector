@@ -1,16 +1,12 @@
 package org.gbcraft.tyrodetector.listener;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
-import org.gbcraft.tyrodetector.bean.VHRule;
 import org.gbcraft.tyrodetector.config.LanguageConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
@@ -25,8 +21,9 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
 
     public BucketEmptyListener(TyroDetector plugin) {
         super(plugin);
-        // 周期性松弛缓存数据
-        Bukkit.getScheduler().runTaskTimer(plugin, this::releaseAll, plugin.getDetectorConfig().getLiquidCycle() * 1200L, plugin.getDetectorConfig().getLiquidCycle() * 1200L);
+        //TODO DELETE
+/*        // 周期性松弛缓存数据
+        Bukkit.getScheduler().runTaskTimer(plugin, this::releaseAll, plugin.getDetectorConfig().getLiquidCycle() * 1200L, plugin.getDetectorConfig().getLiquidCycle() * 1200L);*/
     }
 
     @EventHandler
@@ -42,7 +39,7 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
         // 流体桶风险预测
         PredictorManager.fluidPredict(player, bucket, event);
 
-        VHRule rule = plugin.getDetectorConfig().getLiquidMap().get(bucket.toString());
+        /*VHRule rule = plugin.getDetectorConfig().getLiquidMap().get(bucket.toString());
         if (null == rule) {
             return;
         }
@@ -83,10 +80,12 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
                 }
             }, 20 * 3);
 
-        }
+        }*/
 
     }
 
+    //TODO DELETE
+    /*@Deprecated
     private boolean isFlame(PlayerBucketEmptyEvent event) {
         boolean isFlame = false;
 
@@ -111,9 +110,11 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
         }
 
         return isFlame;
-    }
+    }*/
 
+    //TODO DELETE
     @Override
+    @Deprecated
     protected final void joinContainers(HumanEntity player, Material bucket, Integer limit) {
         Map<Material, Integer> playerBuckets = containers.computeIfAbsent(player, k -> new HashMap<>());
         playerBuckets.merge(bucket, 1, Integer::sum);

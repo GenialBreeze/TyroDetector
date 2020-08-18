@@ -27,8 +27,9 @@ import java.util.Map;
 public class PlayerInteractListener extends ContainerListener<Material, Integer> implements Listener {
     public PlayerInteractListener(TyroDetector plugin) {
         super(plugin);
+        //TODO DELETE
         // 周期性松弛缓存数据
-        Bukkit.getScheduler().runTaskTimer(plugin, this::releaseAll, plugin.getDetectorConfig().getFireCycle() * 1200L, plugin.getDetectorConfig().getFireCycle() * 1200L);
+/*        Bukkit.getScheduler().runTaskTimer(plugin, this::releaseAll, plugin.getDetectorConfig().getFireCycle() * 1200L, plugin.getDetectorConfig().getFireCycle() * 1200L);*/
     }
 
     @EventHandler
@@ -59,7 +60,8 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
                         // 火势风险预测
                         PredictorManager.firePredict(player, location);
 
-                        ItemStack item = event.getItem();
+                        //TODO DELETE
+                        /*ItemStack item = event.getItem();
                         if (null != item) {
                             Integer limit = plugin.getDetectorConfig().getFireMap().get(item.getType().name());
                             if (null != limit) {
@@ -67,7 +69,7 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
 
                                 joinContainers(player, item.getType(), limit);
                             }
-                        }
+                        }*/
                     }
                 }, 5L);
             }
@@ -75,7 +77,9 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
     }
 
 
+    //TODO DELETE
     @Override
+    @Deprecated
     protected final void joinContainers(HumanEntity player, Material item, Integer limit) {
         //获取玩家的物品放置表, 如果不存在则新建
         Map<Material, Integer> playerItems = containers.computeIfAbsent(player, k -> new HashMap<>());

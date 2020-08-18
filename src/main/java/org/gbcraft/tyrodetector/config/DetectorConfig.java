@@ -1,7 +1,5 @@
 package org.gbcraft.tyrodetector.config;
 
-import org.gbcraft.tyrodetector.bean.VHRule;
-
 import java.util.Map;
 
 /**
@@ -16,11 +14,12 @@ public class DetectorConfig {
     private final Map<String, Integer> placeMap;
     private final Integer entityCycle;
     private final Map<String, Integer> entityMap;
-    private final Integer liquidCycle;
-    private final Map<String, VHRule> liquidMap;
-    private final Integer lavaBucketRange;
-    private final Integer fireCycle;
-    private final Map<String, Integer> fireMap;
+    //TODO DELETE
+//    private final Integer liquidCycle;
+//    private final Map<String, VHRule> liquidMap;
+//    private final Integer lavaBucketRange;
+//    private final Integer fireCycle;
+//    private final Map<String, Integer> fireMap;
     private final Boolean debug;
     private final Integer whiteCycle;
     private final Boolean tntDupePredicate;
@@ -40,11 +39,12 @@ public class DetectorConfig {
         this.placeMap = ConfigReader.getParamMap("placeMap");
         this.entityCycle = Integer.parseInt(ConfigReader.getParam("entityCycle"));
         this.entityMap = ConfigReader.getParamMap("entityMap");
-        this.liquidCycle = Integer.parseInt(ConfigReader.getParam("liquidCycle"));
+        //TODO DELETE
+/*        this.liquidCycle = Integer.parseInt(ConfigReader.getParam("liquidCycle"));
         this.liquidMap = ConfigReader.getVHMap("liquidMap");
         this.lavaBucketRange = Math.abs(Integer.parseInt(ConfigReader.getParam("lavaBucketRange")));
         this.fireCycle = Integer.parseInt(ConfigReader.getParam("fireCycle"));
-        this.fireMap = ConfigReader.getParamMap("fireMap");
+        this.fireMap = ConfigReader.getParamMap("fireMap");*/
         this.debug = Boolean.valueOf(ConfigReader.getParam("debug"));
         this.whiteCycle = Integer.parseInt(ConfigReader.getParam("whiteCycle"));
         this.tntDupePredicate = Boolean.valueOf(ConfigReader.getParam("tntDupePredicate"));
@@ -76,13 +76,14 @@ public class DetectorConfig {
         return entityMap;
     }
 
-    public Map<String, VHRule> getLiquidMap() {
+    //TODO DELETE
+/*    public Map<String, VHRule> getLiquidMap() {
         return liquidMap;
     }
 
     public Map<String, Integer> getFireMap() {
         return fireMap;
-    }
+    }*/
 
     public Integer getBrokenCycle() {
         return brokenCycle;
@@ -104,7 +105,8 @@ public class DetectorConfig {
         return whiteCycle;
     }
 
-    public Integer getLiquidCycle() {
+    //TODO DELETE
+/*    public Integer getLiquidCycle() {
         return liquidCycle;
     }
 
@@ -114,7 +116,7 @@ public class DetectorConfig {
 
     public Integer getLavaBucketRange() {
         return lavaBucketRange;
-    }
+    }*/
 
     public Boolean getTntDupePredicate() {
         return tntDupePredicate;
@@ -155,11 +157,6 @@ public class DetectorConfig {
                 ", placeMap=" + placeMap +
                 ", entityCycle=" + entityCycle +
                 ", entityMap=" + entityMap +
-                ", liquidCycle=" + liquidCycle +
-                ", liquidMap=" + liquidMap +
-                ", lavaBucketRange=" + lavaBucketRange +
-                ", fireCycle=" + fireCycle +
-                ", fireMap=" + fireMap +
                 ", debug=" + debug +
                 ", whiteCycle=" + whiteCycle +
                 ", tntDupePredicate=" + tntDupePredicate +
