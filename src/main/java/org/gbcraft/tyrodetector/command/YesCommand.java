@@ -30,14 +30,14 @@ public class YesCommand extends TDCommand {
                 Player leader = Bukkit.getPlayer(inviter.getLeader());
                 Player inv = Bukkit.getPlayer(inviter.getInviter());
 
-                if (null != leader && leader.isOnline()) {
-                    leader.sendMessage(ChatMessageHelper.getMsg(joinedTeam));
-                }
                 if (null != inv && inv.isOnline()) {
                     inv.sendMessage(ChatMessageHelper.getMsg(joinedTeam));
                 }
                 if (member.isOnline()) {
                     member.sendMessage(ChatMessageHelper.getMsg(joinTeam));
+                }
+                if (null != leader && !inviter.getLeader().equals(inviter.getInviter()) && leader.isOnline()) {
+                    leader.sendMessage(ChatMessageHelper.getMsg(joinedTeam));
                 }
             }
             else {
