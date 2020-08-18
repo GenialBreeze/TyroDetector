@@ -14,9 +14,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.config.LanguageConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
-import org.gbcraft.tyrodetector.prediction.*;
+import org.gbcraft.tyrodetector.prediction.PredictorManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,10 +84,10 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
         //若该方块数目达到监测值, 发送邮件
         if (playerItems.get(item) >= limit) {
             plugin.logToFile("[DEBUG]火焰次数达到上限,邮件准备");
-            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 使用道具类型: " + item.name());
+            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 使用道具类型: " + LanguageConfig.getName(item));
             String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
             String content = player.getWorld().getName() +
-                    " 使用 " + item.name() +
+                    " 使用 " + LanguageConfig.getName(item) +
                     " 点火x" + playerItems.get(item) +
                     " " + new SimpleDateFormat("HH:mm").format(new Date()) +
                     " " + loc;

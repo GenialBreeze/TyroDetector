@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.config.LanguageConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 
@@ -77,7 +78,7 @@ public class ItemListener implements Listener {
                             else {
                                 contentBuilder.append(" 存入 ");
                             }
-                            contentBuilder.append(item.getType());
+                            contentBuilder.append(LanguageConfig.getName(item.getType()));
                             contentBuilder.append(" x");
                             contentBuilder.append(Math.abs(item.getAmount()));
                             contentBuilder.append(" ").append(new SimpleDateFormat("HH:mm").format(new Date()));

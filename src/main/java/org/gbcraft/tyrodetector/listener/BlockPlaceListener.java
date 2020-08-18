@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.config.LanguageConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.prediction.PredictorManager;
@@ -59,10 +60,10 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
         //若该方块数目达到监测值, 发送邮件
         if (playerBlocks.get(block) >= limit) {
             plugin.logToFile("[DEBUG]方块被放置次数达到上限,邮件准备");
-            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 方块类型: " + block.getType().name());
+            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 方块类型: " + LanguageConfig.getName(block.getType()));
             String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
             String content = player.getWorld().getName() +
-                    " 放置 " + block.getType().name() +
+                    " 放置 " + LanguageConfig.getName(block.getType()) +
                     " x" + playerBlocks.get(block) +
                     " " + new SimpleDateFormat("HH:mm").format(new Date()) +
                     " " + loc;

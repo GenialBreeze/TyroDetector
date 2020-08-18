@@ -11,9 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.bean.VHRule;
+import org.gbcraft.tyrodetector.config.LanguageConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
-import org.gbcraft.tyrodetector.prediction.*;
+import org.gbcraft.tyrodetector.prediction.PredictorManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,7 +43,7 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
         PredictorManager.fluidPredict(player, bucket, event);
 
         VHRule rule = plugin.getDetectorConfig().getLiquidMap().get(bucket.toString());
-        if(null == rule){
+        if (null == rule) {
             return;
         }
 
@@ -58,20 +59,20 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
             Location liquidLoc = event.getBlockClicked().getLocation().add(0, 1, 0);
             boolean taskIsLava = isLava;
             boolean taskIsFlame = isFlame;
-            Bukkit.getScheduler().runTaskLater(plugin, ()->{
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 Block block = liquidLoc.getBlock();
-                if(taskIsLava){
+                if (taskIsLava) {
                     boolean taskIsObsidian = false;
-                    if(block.getType() == Material.OBSIDIAN){
+                    if (block.getType() == Material.OBSIDIAN) {
                         taskIsObsidian = true;
                     }
 
-                    if(taskIsObsidian){
+                    if (taskIsObsidian) {
                         return;
                     }
                 }
 
-                if(liquidLoc.getBlockY() >= height || (taskIsLava && taskIsFlame)){
+                if (liquidLoc.getBlockY() >= height || (taskIsLava && taskIsFlame)) {
                     Integer limit = rule.getLimit();
 
                     if (null != limit) {
@@ -80,7 +81,7 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
                         joinContainers(player, bucket, limit);
                     }
                 }
-            }, 20*3);
+            }, 20 * 3);
 
         }
 
@@ -118,10 +119,10 @@ public class BucketEmptyListener extends ContainerListener<Material, Integer> im
         playerBuckets.merge(bucket, 1, Integer::sum);
         if (playerBuckets.get(bucket) >= limit) {
             plugin.logToFile("[DEBUG]流体桶被使用次数达到上限,邮件准备");
-            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 流体桶类型: " + bucket.name());
+            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 流体桶类型: " + LanguageConfig.getName(bucket));
             String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
             String content = player.getWorld().getName() +
-                    " 放置 " + bucket.name() +
+                    " 放置 " + LanguageConfig.getName(bucket) +
                     " x" + playerBuckets.get(bucket) +
                     " " + new SimpleDateFormat("HH:mm").format(new Date()) +
                     " " + loc;
