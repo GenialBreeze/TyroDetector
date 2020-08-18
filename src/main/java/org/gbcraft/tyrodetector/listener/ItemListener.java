@@ -69,7 +69,7 @@ public class ItemListener implements Listener {
                         if (limit != null && limit <= Math.abs(item.getAmount())) {
                             //DEBUG
                             plugin.logToFile("[DEBUG]存取个数已达到监测值");
-                            String loc = "(X:" + location.getBlockX() + ",Z:" + location.getBlockZ() + ",Y:" + location.getBlockY() + ")";
+                            String loc = "(" + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ() + ")";
                             //世界类型
                             contentBuilder.append(player.getWorld().getName());
                             if (item.getAmount() < 0) {

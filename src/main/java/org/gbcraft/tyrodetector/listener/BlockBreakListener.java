@@ -12,7 +12,9 @@ import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 方块破坏监测器
@@ -53,7 +55,7 @@ public class BlockBreakListener extends ContainerListener<Block, Integer> implem
         if (playerBlocks.get(block) >= limit) {
             plugin.logToFile("[DEBUG]方块被破坏次数达到上限,邮件准备");
             plugin.logToFile("[DEBUG]目标: " + player.getName() + " 方块类型: " + LanguageConfig.getName(block.getType()));
-            String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
+            String loc = "(" + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ() + ")";
             String content = player.getWorld().getName() +
                     " 破坏 " + LanguageConfig.getName(block.getType()) +
                     " x" + playerBlocks.get(block) +

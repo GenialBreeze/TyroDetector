@@ -54,7 +54,7 @@ public class EntityDeathListener extends ContainerListener<Entity, Integer> impl
         if (playerEntities.get(entity) >= limit) {
             plugin.logToFile("[DEBUG]实体死亡次数达到上限,邮件准备");
             plugin.logToFile("[DEBUG]目标: " + player.getName() + " 实体类型: " + LanguageConfig.getName(entity.getType()));
-            String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
+            String loc = "(" + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ() + ")";
             String content = player.getWorld().getName() +
                     " 杀死 " + LanguageConfig.getName(entity.getType()) +
                     " - " + entity.getName() +

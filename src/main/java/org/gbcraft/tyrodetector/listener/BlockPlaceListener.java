@@ -61,7 +61,7 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
         if (playerBlocks.get(block) >= limit) {
             plugin.logToFile("[DEBUG]方块被放置次数达到上限,邮件准备");
             plugin.logToFile("[DEBUG]目标: " + player.getName() + " 方块类型: " + LanguageConfig.getName(block.getType()));
-            String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
+            String loc = "(" + player.getLocation().getBlockX() + " " + player.getLocation().getBlockY() + " " + player.getLocation().getBlockZ() + ")";
             String content = player.getWorld().getName() +
                     " 放置 " + LanguageConfig.getName(block.getType()) +
                     " x" + playerBlocks.get(block) +
