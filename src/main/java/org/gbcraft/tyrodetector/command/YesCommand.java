@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.bean.Inviter;
 import org.gbcraft.tyrodetector.help.ChatMessageHelper;
 import org.gbcraft.tyrodetector.help.TeamHelper;
 
@@ -19,16 +20,24 @@ public class YesCommand extends TDCommand {
     protected void run() {
         if (sender instanceof Player) {
             Player member = (Player) sender;
-            UUID leader = TeamHelper.popTempLeader(member.getUniqueId());
+            Inviter inviter = TeamHelper.popInviter(member.getUniqueId());
             TeamHelper.cancelOutTimeTask(member.getUniqueId());
-            if (null != leader) {
-                Player lead = Bukkit.getPlayer(leader);
-                if (null != lead) {
-                    plugin.getPlayersConfig().addPlayers(leader, member.getUniqueId());
-                    String successMsg = "&2绑定成功: " + lead.getName() + "与" + sender.getName();
+            if (null != inviter) {
+                plugin.getPlayersConfig().addPlayers(inviter.getLeader(), member.getUniqueId());
+                String joinedTeam = "&2" + member.getName() + "加入了队伍!";
+                String joinTeam = "&2邀请已接受, 组队成功!";
 
-                    lead.sendMessage(ChatMessageHelper.getMsg(successMsg));
-                    member.sendMessage(ChatMessageHelper.getMsg(successMsg));
+                Player leader = Bukkit.getPlayer(inviter.getLeader());
+                Player inv = Bukkit.getPlayer(inviter.getInviter());
+
+                if (null != leader && leader.isOnline()) {
+                    leader.sendMessage(ChatMessageHelper.getMsg(joinedTeam));
+                }
+                if (null != inv && inv.isOnline()) {
+                    inv.sendMessage(ChatMessageHelper.getMsg(joinedTeam));
+                }
+                if (member.isOnline()) {
+                    member.sendMessage(ChatMessageHelper.getMsg(joinTeam));
                 }
             }
             else {

@@ -90,7 +90,7 @@ public class InviteCommand extends TDCommand {
                     sender.sendMessage(ChatMessageHelper.getMsg(hadPartyMsg));
                 }
                 else {
-                    // 邀请人是否是队员, 如果是则将被邀请人转移到该队队长名下
+                    // 邀请人是队员, 则向上获取队长
                     if (plugin.getPlayersConfig().hasLeader(l.getUniqueId())) {
                         l = NameUUIDHelper.getOfflinePlayer(plugin.getPlayersConfig().getLeaderUUID(l.getUniqueId()));
                     }
