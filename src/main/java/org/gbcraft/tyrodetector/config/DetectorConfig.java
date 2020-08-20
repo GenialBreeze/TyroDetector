@@ -1,5 +1,6 @@
 package org.gbcraft.tyrodetector.config;
 
+import org.apache.commons.lang.StringUtils;
 import org.gbcraft.tyrodetector.bean.ItemRule;
 
 import java.util.HashMap;
@@ -36,14 +37,14 @@ public class DetectorConfig {
     public DetectorConfig() {
         this.tyroHours = Integer.parseInt(ConfigReader.getParam("tyroHours"));
 
-        this.itemMap = buildItemMap(ConfigReader.getParamMap(String.class, "itemMap"));
+        this.itemMap = buildItemMap(ConfigReader.getParamStringMap("itemMap"));
 
         this.brokenCycle = Integer.parseInt(ConfigReader.getParam("brokenCycle"));
-        this.brokenMap = ConfigReader.getParamMap(Integer.class, "brokenMap");
+        this.brokenMap = ConfigReader.getParamIntMap("brokenMap");
         this.placeCycle = Integer.parseInt(ConfigReader.getParam("placeCycle"));
-        this.placeMap = ConfigReader.getParamMap(Integer.class, "placeMap");
+        this.placeMap = ConfigReader.getParamIntMap("placeMap");
         this.entityCycle = Integer.parseInt(ConfigReader.getParam("entityCycle"));
-        this.entityMap = ConfigReader.getParamMap(Integer.class, "entityMap");
+        this.entityMap = ConfigReader.getParamIntMap("entityMap");
         //TODO DELETE
 /*        this.liquidCycle = Integer.parseInt(ConfigReader.getParam("liquidCycle"));
         this.liquidMap = ConfigReader.getVHMap("liquidMap");
@@ -54,9 +55,9 @@ public class DetectorConfig {
         this.whiteCycle = Integer.parseInt(ConfigReader.getParam("whiteCycle"));
         this.tntDupePredicate = Boolean.valueOf(ConfigReader.getParam("tntDupePredicate"));
         this.predict = ConfigReader.getParamSwitchMap("predict");
-        this.predictLevel = ConfigReader.getParamMap(Integer.class, "predict-level");
+        this.predictLevel = ConfigReader.getParamIntMap("predict-level");
         this.predictSendOn = ConfigReader.getParam("predict-sendon");
-        this.predictLimit = ConfigReader.getParamMap(Integer.class, "predict-limit");
+        this.predictLimit = ConfigReader.getParamIntMap("predict-limit");
         this.predictCycle = Integer.parseInt(ConfigReader.getParam("predict-cycle"));
         this.freezeOnServe = Boolean.valueOf(ConfigReader.getParam("freeze-on-serve"));
     }
@@ -64,20 +65,29 @@ public class DetectorConfig {
     private Map<String, ItemRule> buildItemMap(Map<String, String> itemMap) {
         Map<String, ItemRule> res = new HashMap<>();
         itemMap.forEach((k, v) -> {
-            String[] split = v.split(" ");
+            String reg = "^[0-9]+?$";
+            String temp = v.trim();
             int add = Integer.MAX_VALUE;
             int remove = Integer.MAX_VALUE;
-            for (String s : split) {
-                try {
-                    if (s.startsWith("+")) {
-                        add = Integer.parseInt(s.substring(1));
+            if (temp.matches(reg)) {
+                add = Integer.parseInt(v);
+                remove = Integer.parseInt(v);
+            }
+            else {
+                String[] split = temp.split(" ");
+                for (String s : split) {
+                    try {
+                        if (s.startsWith("+")) {
+                            add = Integer.parseInt(s.substring(1));
+                        }
+                        else if (s.startsWith("-")) {
+                            remove = Integer.parseInt(s.substring(1));
+                        }
                     }
-                    else if (s.startsWith("-")) {
-                        remove = Integer.parseInt(s.substring(1));
+                    catch (Exception ignore) {
                     }
                 }
-                catch (Exception ignore) {
-                }
+
             }
             ItemRule rule = new ItemRule(add, remove);
             res.put(k, rule);
