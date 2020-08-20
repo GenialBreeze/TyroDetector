@@ -1,6 +1,5 @@
 package org.gbcraft.tyrodetector.config;
 
-import org.apache.commons.lang.StringUtils;
 import org.gbcraft.tyrodetector.bean.ItemRule;
 
 import java.util.HashMap;
@@ -18,12 +17,6 @@ public class DetectorConfig {
     private final Map<String, Integer> placeMap;
     private final Integer entityCycle;
     private final Map<String, Integer> entityMap;
-    //TODO DELETE
-//    private final Integer liquidCycle;
-//    private final Map<String, VHRule> liquidMap;
-//    private final Integer lavaBucketRange;
-//    private final Integer fireCycle;
-//    private final Map<String, Integer> fireMap;
     private final Boolean debug;
     private final Integer whiteCycle;
     private final Boolean tntDupePredicate;
@@ -45,12 +38,6 @@ public class DetectorConfig {
         this.placeMap = ConfigReader.getParamIntMap("placeMap");
         this.entityCycle = Integer.parseInt(ConfigReader.getParam("entityCycle"));
         this.entityMap = ConfigReader.getParamIntMap("entityMap");
-        //TODO DELETE
-/*        this.liquidCycle = Integer.parseInt(ConfigReader.getParam("liquidCycle"));
-        this.liquidMap = ConfigReader.getVHMap("liquidMap");
-        this.lavaBucketRange = Math.abs(Integer.parseInt(ConfigReader.getParam("lavaBucketRange")));
-        this.fireCycle = Integer.parseInt(ConfigReader.getParam("fireCycle"));
-        this.fireMap = ConfigReader.getParamMap("fireMap");*/
         this.debug = Boolean.valueOf(ConfigReader.getParam("debug"));
         this.whiteCycle = Integer.parseInt(ConfigReader.getParam("whiteCycle"));
         this.tntDupePredicate = Boolean.valueOf(ConfigReader.getParam("tntDupePredicate"));
@@ -116,15 +103,6 @@ public class DetectorConfig {
         return entityMap;
     }
 
-    //TODO DELETE
-/*    public Map<String, VHRule> getLiquidMap() {
-        return liquidMap;
-    }
-
-    public Map<String, Integer> getFireMap() {
-        return fireMap;
-    }*/
-
     public Integer getBrokenCycle() {
         return brokenCycle;
     }
@@ -144,19 +122,6 @@ public class DetectorConfig {
     public Integer getWhiteCycle() {
         return whiteCycle;
     }
-
-    //TODO DELETE
-/*    public Integer getLiquidCycle() {
-        return liquidCycle;
-    }
-
-    public Integer getFireCycle() {
-        return fireCycle;
-    }
-
-    public Integer getLavaBucketRange() {
-        return lavaBucketRange;
-    }*/
 
     public Boolean getTntDupePredicate() {
         return tntDupePredicate;

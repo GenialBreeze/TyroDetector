@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,22 +12,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.gbcraft.tyrodetector.TyroDetector;
-import org.gbcraft.tyrodetector.config.LanguageConfig;
-import org.gbcraft.tyrodetector.email.EmailInfo;
-import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.prediction.PredictorManager;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+public class PlayerInteractListener extends TDListener implements Listener {
 
-public class PlayerInteractListener extends ContainerListener<Material, Integer> implements Listener {
     public PlayerInteractListener(TyroDetector plugin) {
         super(plugin);
-        //TODO DELETE
-        // 周期性松弛缓存数据
-/*        Bukkit.getScheduler().runTaskTimer(plugin, this::releaseAll, plugin.getDetectorConfig().getFireCycle() * 1200L, plugin.getDetectorConfig().getFireCycle() * 1200L);*/
     }
 
     @EventHandler
@@ -58,43 +47,9 @@ public class PlayerInteractListener extends ContainerListener<Material, Integer>
                     if (location.getBlock().getType() == Material.FIRE) {
                         // 火势风险预测
                         PredictorManager.firePredict(player, location);
-
-                        //TODO DELETE
-                        /*ItemStack item = event.getItem();
-                        if (null != item) {
-                            Integer limit = plugin.getDetectorConfig().getFireMap().get(item.getType().name());
-                            if (null != limit) {
-                                plugin.logToFile("[DEBUG]点燃火焰 - " + event.getPlayer().getName());
-
-                                joinContainers(player, item.getType(), limit);
-                            }
-                        }*/
                     }
                 }, 5L);
             }
-        }
-    }
-
-
-    //TODO DELETE
-    @Override
-    @Deprecated
-    protected final void joinContainers(HumanEntity player, Material item, Integer limit) {
-        //获取玩家的物品放置表, 如果不存在则新建
-        Map<Material, Integer> playerItems = containers.computeIfAbsent(player, k -> new HashMap<>());
-        //将放置的方块自增1, 若不存在该方块对应的值则新增 <BlockName:1> 键值对
-        playerItems.merge(item, 1, Integer::sum);
-        //若该方块数目达到监测值, 发送邮件
-        if (playerItems.get(item) >= limit) {
-            plugin.logToFile("[DEBUG]火焰次数达到上限,邮件准备");
-            plugin.logToFile("[DEBUG]目标: " + player.getName() + " 使用道具类型: " + LanguageConfig.getName(item));
-            String loc = "(X:" + player.getLocation().getBlockX() + ",Z:" + player.getLocation().getBlockZ() + ",Y:" + player.getLocation().getBlockY() + ")";
-            String content = player.getWorld().getName() +
-                    " 使用 " + LanguageConfig.getName(item) +
-                    " 点火x" + playerItems.get(item) +
-                    " " + new SimpleDateFormat("HH:mm").format(new Date()) +
-                    " " + loc;
-            EmailManager.getManager().append(player, new EmailInfo(content));
         }
     }
 }

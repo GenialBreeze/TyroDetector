@@ -6,12 +6,11 @@ import org.gbcraft.tyrodetector.TyroDetector;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class ContainerListener<K, V> {
+public abstract class ContainerListener<K, V> extends TDListener {
     protected final Map<HumanEntity, Map<K, V>> containers = new ConcurrentHashMap<>();
-    protected final TyroDetector plugin;
 
     public ContainerListener(TyroDetector plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     protected abstract void joinContainers(HumanEntity player, K block, Integer limit);
