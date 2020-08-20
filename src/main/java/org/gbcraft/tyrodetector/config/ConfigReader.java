@@ -56,8 +56,8 @@ public class ConfigReader {
      * @param root Map的根
      * @return 实例化的Map
      */
-    public static Map<String, Integer> getParamMap(String root) {
-        Map<String, Integer> res = new HashMap<>();
+    public static <T> Map<String, T> getParamMap(Class<T> type, String root) {
+        Map<String, T> res = new HashMap<>();
         TyroDetector instance = TyroDetector.getPlugin();
         FileConfiguration config = instance.getConfig();
         ConfigurationSection cs = config.getConfigurationSection(root);
@@ -65,7 +65,7 @@ public class ConfigReader {
         if (cs != null) {
             Set<String> keySet = cs.getKeys(false);
             for (String key : keySet) {
-                res.put(key.toUpperCase(), cs.getInt(key));
+                res.put(key.toUpperCase(), cs.getObject(key, type));
             }
         }
 

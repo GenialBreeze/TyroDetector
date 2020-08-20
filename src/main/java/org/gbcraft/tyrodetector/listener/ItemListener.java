@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.gbcraft.tyrodetector.TyroDetector;
+import org.gbcraft.tyrodetector.bean.ItemRule;
 import org.gbcraft.tyrodetector.config.LanguageConfig;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
@@ -50,40 +51,39 @@ public class ItemListener implements Listener {
             if (before != null) {
                 // 玩家操作后的背包
                 final ItemStack[] after = ConfigBoxListener.compressInventory(event.getInventory().getContents());
-                // 操作前后物品变化
+                // 操作前后物品变化 (当前背包中物品的变化 -为物品取出背包存入容器 +反之)
                 final ItemStack[] diff = compareInventories(before, after);
                 // 容器大概所在位置
                 final Location location = getInventoryHolderLocation(holder);
                 if (location != null) {
                     // 监测物品表
-                    Map<String, Integer> itemMap = plugin.getDetectorConfig().getItemMap();
+                    Map<String, ItemRule> itemMap = plugin.getDetectorConfig().getItemMap();
 
                     StringBuilder contentBuilder = new StringBuilder();
 
                     for (final ItemStack item : diff) {
-                        Integer limit = itemMap.get(item.getType().name());
+                        ItemRule rule = itemMap.get(item.getType().name());
                         //DEBUG
-                        if (limit != null)
+                        if (rule != null)
                             plugin.logToFile("[DEBUG]发现需要监控存取的物品");
 
-                        if (limit != null && limit <= Math.abs(item.getAmount())) {
-                            //DEBUG
-                            plugin.logToFile("[DEBUG]存取个数已达到监测值");
-                            String loc = "(" + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ() + ")";
-                            //世界类型
-                            contentBuilder.append(player.getWorld().getName());
-                            if (item.getAmount() < 0) {
-                                contentBuilder.append(" 取出 ");
+                        if (rule != null) {
+                            int amount = Math.abs(item.getAmount());
+                            // 在容器中取出后存入了背包
+                            if (item.getAmount() > 0) {
+                                if (amount >= rule.getRemoveLimit()) {
+                                    // 自容器中取出
+                                    appendItemOpeMsg("取出", item, location, player, contentBuilder);
+                                }
                             }
+                            // 在背包中取出后存入了容器
                             else {
-                                contentBuilder.append(" 存入 ");
+                                if (amount >= rule.getAddLimit()) {
+                                    // 向容器中存入
+                                    appendItemOpeMsg("存入", item, location, player, contentBuilder);
+                                }
                             }
-                            contentBuilder.append(LanguageConfig.getName(item.getType()));
-                            contentBuilder.append(" x");
-                            contentBuilder.append(Math.abs(item.getAmount()));
-                            contentBuilder.append(" ").append(new SimpleDateFormat("HH:mm").format(new Date()));
-                            contentBuilder.append(" ").append(loc);
-                            contentBuilder.append("\n");
+
                         }
                     }
                     String limitItems = contentBuilder.toString();
@@ -155,5 +155,21 @@ public class ItemListener implements Listener {
             }
         }
         return diff.toArray(new ItemStack[0]);
+    }
+
+    private void appendItemOpeMsg(String operate, ItemStack item, Location box, HumanEntity player, StringBuilder contentBuilder) {
+        //DEBUG
+        plugin.logToFile("[DEBUG]" + operate + "个数已达到监测值");
+        contentBuilder.append(" ").append(operate).append(" ");
+        String loc = "(" + box.getBlockX() + " " + box.getBlockY() + " " + box.getBlockZ() + ")";
+        //世界类型
+        contentBuilder.append(player.getWorld().getName());
+
+        contentBuilder.append(LanguageConfig.getName(item.getType()));
+        contentBuilder.append(" x");
+        contentBuilder.append(Math.abs(item.getAmount()));
+        contentBuilder.append(" ").append(new SimpleDateFormat("HH:mm").format(new Date()));
+        contentBuilder.append(" ").append(loc);
+        contentBuilder.append("\n");
     }
 }

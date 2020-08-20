@@ -1,5 +1,8 @@
 package org.gbcraft.tyrodetector.config;
 
+import org.gbcraft.tyrodetector.bean.ItemRule;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Map;
  */
 public class DetectorConfig {
     private final Integer tyroHours;
-    private final Map<String, Integer> itemMap;
+    private final Map<String, ItemRule> itemMap;
     private final Integer brokenCycle;
     private final Map<String, Integer> brokenMap;
     private final Integer placeCycle;
@@ -32,13 +35,15 @@ public class DetectorConfig {
 
     public DetectorConfig() {
         this.tyroHours = Integer.parseInt(ConfigReader.getParam("tyroHours"));
-        this.itemMap = ConfigReader.getParamMap("itemMap");
+
+        this.itemMap = buildItemMap(ConfigReader.getParamMap(String.class, "itemMap"));
+
         this.brokenCycle = Integer.parseInt(ConfigReader.getParam("brokenCycle"));
-        this.brokenMap = ConfigReader.getParamMap("brokenMap");
+        this.brokenMap = ConfigReader.getParamMap(Integer.class, "brokenMap");
         this.placeCycle = Integer.parseInt(ConfigReader.getParam("placeCycle"));
-        this.placeMap = ConfigReader.getParamMap("placeMap");
+        this.placeMap = ConfigReader.getParamMap(Integer.class, "placeMap");
         this.entityCycle = Integer.parseInt(ConfigReader.getParam("entityCycle"));
-        this.entityMap = ConfigReader.getParamMap("entityMap");
+        this.entityMap = ConfigReader.getParamMap(Integer.class, "entityMap");
         //TODO DELETE
 /*        this.liquidCycle = Integer.parseInt(ConfigReader.getParam("liquidCycle"));
         this.liquidMap = ConfigReader.getVHMap("liquidMap");
@@ -49,18 +54,43 @@ public class DetectorConfig {
         this.whiteCycle = Integer.parseInt(ConfigReader.getParam("whiteCycle"));
         this.tntDupePredicate = Boolean.valueOf(ConfigReader.getParam("tntDupePredicate"));
         this.predict = ConfigReader.getParamSwitchMap("predict");
-        this.predictLevel = ConfigReader.getParamMap("predict-level");
+        this.predictLevel = ConfigReader.getParamMap(Integer.class, "predict-level");
         this.predictSendOn = ConfigReader.getParam("predict-sendon");
-        this.predictLimit = ConfigReader.getParamMap("predict-limit");
+        this.predictLimit = ConfigReader.getParamMap(Integer.class, "predict-limit");
         this.predictCycle = Integer.parseInt(ConfigReader.getParam("predict-cycle"));
         this.freezeOnServe = Boolean.valueOf(ConfigReader.getParam("freeze-on-serve"));
+    }
+
+    private Map<String, ItemRule> buildItemMap(Map<String, String> itemMap) {
+        Map<String, ItemRule> res = new HashMap<>();
+        itemMap.forEach((k, v) -> {
+            String[] split = v.split(" ");
+            int add = Integer.MAX_VALUE;
+            int remove = Integer.MAX_VALUE;
+            for (String s : split) {
+                try {
+                    if (s.startsWith("+")) {
+                        add = Integer.parseInt(s.substring(1));
+                    }
+                    else if (s.startsWith("-")) {
+                        remove = Integer.parseInt(s.substring(1));
+                    }
+                }
+                catch (Exception ignore) {
+                }
+            }
+            ItemRule rule = new ItemRule(add, remove);
+            res.put(k, rule);
+        });
+
+        return res;
     }
 
     public Integer getTyroHours() {
         return tyroHours;
     }
 
-    public Map<String, Integer> getItemMap() {
+    public Map<String, ItemRule> getItemMap() {
         return itemMap;
     }
 

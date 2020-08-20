@@ -52,13 +52,13 @@ public class PlayersConfig {
         return res;
     }
 
-    public boolean hasLeader(UUID uuid){
+    public boolean hasLeader(UUID uuid) {
         return memToLeader.get(uuid) != null;
     }
 
-    public String getLeader(String member){
+    public String getLeader(String member) {
         Player m = Bukkit.getPlayer(member);
-        if(null != m){
+        if (null != m) {
             return getLeader(m.getUniqueId());
         }
         return null;
@@ -77,7 +77,7 @@ public class PlayersConfig {
         return res;
     }
 
-    public UUID getLeaderUUID(UUID member){
+    public UUID getLeaderUUID(UUID member) {
         return memToLeader.get(member);
     }
 
@@ -123,5 +123,15 @@ public class PlayersConfig {
         }
 
         ConfigWriter.setPlayers(leader, list);
+    }
+
+    public int getMemberNum(UUID leader) {
+        int res = 0;
+        List<UUID> member = players.get(leader);
+        if (null != member) {
+            res = member.size();
+        }
+
+        return res;
     }
 }
