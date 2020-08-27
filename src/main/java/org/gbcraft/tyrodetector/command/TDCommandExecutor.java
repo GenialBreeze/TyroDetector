@@ -51,8 +51,8 @@ public class TDCommandExecutor implements TabExecutor {
         return true;
     }
 
-    String[] opSubCommand = {"version", "thaw", "invite", "yes", "config", "reload", "white"};
-    String[] subCommand = {"version", "invite", "yes"};
+    String[] opSubCommand = {"version", "thaw", "config", "reload", "white"};
+    String[] subCommand = {"version"};
     String[] whiteSubCommand = {"add", "remove", "list"};
 
     @Override

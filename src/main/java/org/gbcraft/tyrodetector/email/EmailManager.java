@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class EmailManager {
     private static final EmailManager manager = new EmailManager();
+    private final TyroDetector plugin = TyroDetector.getPlugin();
     private final Map<HumanEntity, EmailInfo> emails = new ConcurrentHashMap<>();
 
     public static EmailManager getManager() {
@@ -36,12 +37,20 @@ public class EmailManager {
             // 如果存在关于该玩家的邮件，则将内容整合进已存在的邮件中
             emailInfo.appendContent(info.getContent());
         }
-        String leader = TyroDetector.getPlugin().getPlayersConfig().getLeader(player.getUniqueId());
-        emailInfo.setTitle(
-                "来自风险预测模块的紧急邮件 - " + player.getName() +
-                        " - " + TimeHelperManager.getPlayHours(player.getName()) +
-                        "小时 " + "队长: " + leader);
-        emailInfo.fixAddContent("队伍信息\n" + TyroDetector.getPlugin().getPlayersConfig().getPartyInfo(player.getUniqueId()));
+
+        String leader = "未获取";
+
+        if (plugin.isTypaAvailable()) {
+            leader = TyroDetector.getPlugin().getPartiesConfig().getLeader(player.getUniqueId());
+        }
+
+        String title = String.format("来自风险预测模块的紧急邮件 - %s - %d 小时 - 队长:%s", player.getName(), TimeHelperManager.getPlayHours(player.getName()), leader);
+        emailInfo.setTitle(title);
+
+        if (plugin.isTypaAvailable()) {
+            emailInfo.fixAddContent("队伍信息\n" + TyroDetector.getPlugin().getPartiesConfig().getPartyInfo(player.getUniqueId()));
+        }
+
         send(emailInfo);
         emails.remove(player);
     }
@@ -62,12 +71,19 @@ public class EmailManager {
             emailInfo.appendContent(info.getContent());
             // 如果关于该玩家的邮件已到达生命周期，则判定为紧急邮件并优先于周期邮件直接发送
             if (emailInfo.getAge() >= TyroDetector.getPlugin().getEmailConfig().getAge()) {
-                String leader = TyroDetector.getPlugin().getPlayersConfig().getLeader(player.getUniqueId());
-                emailInfo.setTitle(
-                        "服务器可疑玩家预警 - " + player.getName() +
-                                " - " + TimeHelperManager.getPlayHours(player.getName()) +
-                                "小时 " + "队长: " + leader);
-                emailInfo.fixAddContent("队伍信息\n" + TyroDetector.getPlugin().getPlayersConfig().getPartyInfo(player.getUniqueId()));
+                String leader = "未获取";
+
+                if (plugin.isTypaAvailable()) {
+                    leader = plugin.getPartiesConfig().getLeader(player.getUniqueId());
+                }
+
+                String title = String.format("服务器可疑玩家预警 - %s - %d 小时 - 队长:%s", player.getName(), TimeHelperManager.getPlayHours(player.getName()), leader);
+                emailInfo.setTitle(title);
+
+                if (plugin.isTypaAvailable()) {
+                    emailInfo.fixAddContent("队伍信息\n" + TyroDetector.getPlugin().getPartiesConfig().getPartyInfo(player.getUniqueId()));
+                }
+
                 send(emailInfo);
                 emails.remove(player);
             }
@@ -95,10 +111,17 @@ public class EmailManager {
         String title = "服务器周期日志";
         StringBuilder content = new StringBuilder();
         emails.forEach((key, value) -> {
-            String leader = TyroDetector.getPlugin().getPlayersConfig().getLeader(key.getUniqueId());
-            content.append(key.getName()).append("-").append(TimeHelperManager.getPlayHours(key.getName())).append("小时 ").append("队长: ").append(leader);
-            content.append(":\n").append(value.getContent()).
-                    append("\n队伍信息\n").append(TyroDetector.getPlugin().getPlayersConfig().getPartyInfo(key.getUniqueId())).append("\n\n");
+            String leader = "未获取";
+            String teamMsg = "未获取";
+
+            if (plugin.isTypaAvailable()) {
+                leader = TyroDetector.getPlugin().getPartiesConfig().getLeader(key.getUniqueId());
+                teamMsg = TyroDetector.getPlugin().getPartiesConfig().getPartyInfo(key.getUniqueId());
+            }
+
+            String format = String.format("%s - %d 小时 队长:%s:\n%s\n队伍信息\n%s\n\n", key.getName(), TimeHelperManager.getPlayHours(key.getName()), leader, value.getContent(), teamMsg);
+
+            content.append(format);
             emails.remove(key);
         });
 

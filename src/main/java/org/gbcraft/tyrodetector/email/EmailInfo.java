@@ -38,7 +38,7 @@ public class EmailInfo {
     }
 
     // 加入新的邮件内容但不影响生命周期
-    public void fixAddContent(String content){
+    public void fixAddContent(String content) {
         this.content += "\n" + content;
     }
 

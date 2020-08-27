@@ -16,6 +16,7 @@ public class FreezeManager {
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).addModifier(freezeModifier);
         player.sendMessage(ChatMessageHelper.getMsg("&c你在玩沙皇氢弹，请找管理员解释吧"));
     }
+
     public void thawPlayer(HumanEntity player) {
         // 解冻玩家
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).removeModifier(freezeModifier);

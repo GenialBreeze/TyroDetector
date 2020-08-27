@@ -6,7 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.gbcraft.tyrodetector.command.TDCommandExecutor;
-import org.gbcraft.tyrodetector.config.*;
+import org.gbcraft.tyrodetector.config.DetectorConfig;
+import org.gbcraft.tyrodetector.config.EmailConfig;
+import org.gbcraft.tyrodetector.config.LanguageConfig;
+import org.gbcraft.tyrodetector.config.WhiteListConfig;
 import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.help.NameUUIDHelper;
 import org.gbcraft.tyrodetector.help.PlanTimeHelper;
@@ -15,6 +18,8 @@ import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 import org.gbcraft.tyrodetector.listener.*;
 import org.gbcraft.tyrodetector.prediction.PredictContainer;
 import org.gbcraft.tyrodetector.prediction.PredictorManager;
+import org.gbcraft.tyroparty.TyroParty;
+import org.gbcraft.tyroparty.config.PartiesConfig;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -27,9 +32,9 @@ import java.util.UUID;
 
 public final class TyroDetector extends JavaPlugin {
     private static TyroDetector plugin;
+    private TyroParty typa;
     private DetectorConfig detectorConfig;
     private EmailConfig emailConfig;
-    private PlayersConfig playersConfig;
     private WhiteListConfig whiteListConfig;
     private Map<UUID, Player> tyroPlayers;
 
@@ -42,17 +47,17 @@ public final class TyroDetector extends JavaPlugin {
         plugin = this;
         NameUUIDHelper.init();
 
+        loadPartyModule();
+
         /*生成默认配置*/
         saveDefaultConfig();
         saveResource("email.yml", false);
         saveResource("whitelist.yml", false);
-        saveResource("players.yml", false);
         saveResource("language.yml", false);
 
         /*实例化配置文件*/
         detectorConfig = new DetectorConfig();
         emailConfig = new EmailConfig();
-        playersConfig = new PlayersConfig();
         whiteListConfig = new WhiteListConfig();
         LanguageConfig.init();
 
@@ -90,6 +95,18 @@ public final class TyroDetector extends JavaPlugin {
 
         cycleTaskInit();
         this.getLogger().info("TyroDetector初始化完成!");
+    }
+
+    private void loadPartyModule() {
+        try {
+            Class.forName("org.gbcraft.tyroparty.TyroParty");
+            typa = (TyroParty) Bukkit.getPluginManager().getPlugin("TyroParty");
+            this.getLogger().info("TyroParty队伍模块加载完成!");
+        }
+        catch (ClassNotFoundException e) {
+            this.getLogger().info("TyroParty队伍模块未加载!");
+            typa = null;
+        }
     }
 
     @Override
@@ -194,7 +211,6 @@ public final class TyroDetector extends JavaPlugin {
         reloadConfig();
         detectorConfig = new DetectorConfig();
         emailConfig = new EmailConfig();
-        playersConfig = new PlayersConfig();
         LanguageConfig.init();
         cycleTaskInit();
     }
@@ -211,8 +227,22 @@ public final class TyroDetector extends JavaPlugin {
         return emailConfig;
     }
 
-    public PlayersConfig getPlayersConfig() {
-        return playersConfig;
+    public boolean isTypaAvailable() {
+        try {
+            Class.forName("org.gbcraft.tyroparty.TyroParty");
+            if (null == typa) {
+                typa = (TyroParty) Bukkit.getPluginManager().getPlugin("TyroParty");
+            }
+        }
+        catch (ClassNotFoundException ignore) {
+            typa = null;
+        }
+
+        return typa != null;
+    }
+
+    public PartiesConfig getPartiesConfig() {
+        return PartiesConfig.getConfig();
     }
 
     public WhiteListConfig getWhiteListConfig() {

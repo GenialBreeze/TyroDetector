@@ -6,7 +6,7 @@
 
     <groupId>org.gbcraft</groupId>
     <artifactId>TyroDetector</artifactId>
-    <version>5.2.2-ALPHA</version>
+    <version>5.3.0-BETA</version>
     <packaging>jar</packaging>
 
     <name>TyroDetector</name>
@@ -62,6 +62,10 @@
             <id>luckyfish-repo</id>
             <url>https://raw.githubusercontent.com/Lucky-fish/mvn-repo/master/</url>
         </repository>
+        <repository>
+            <id>ice-maven-repo</id>
+            <url>https://raw.githubusercontent.com/iceblues/mvn-repo/master/repository</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -89,6 +93,12 @@
             <groupId>cn.mcres.luckyfish</groupId>
             <artifactId>PluginCommons</artifactId>
             <version>1.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gbcraft</groupId>
+            <artifactId>TyroParty</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

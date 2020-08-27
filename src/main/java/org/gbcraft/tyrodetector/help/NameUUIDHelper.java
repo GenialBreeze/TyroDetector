@@ -40,6 +40,7 @@ public class NameUUIDHelper {
     public static void append(Player player) {
         toNameMap.put(player.getUniqueId(), player.getName());
         toUUIDMap.put(player.getName(), player.getUniqueId());
+        offlinePlayers.put(player.getUniqueId(), player);
     }
 
     public static String getName(UUID uuid) {

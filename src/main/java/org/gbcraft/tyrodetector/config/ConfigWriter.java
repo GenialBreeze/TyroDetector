@@ -9,7 +9,9 @@ import org.gbcraft.tyrodetector.command.ConfigCommand;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 配置文件写入器
@@ -48,20 +50,6 @@ public class ConfigWriter {
         config.set("whitelist", list);
         try {
             config.save(file);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void setPlayers(UUID root, List<UUID> list) {
-        File file = new File(TyroDetector.getPlugin().getDataFolder(), "players.yml");
-        FileConfiguration players = YamlConfiguration.loadConfiguration(file);
-        List<String> uuids = new ArrayList<>();
-        list.forEach(u -> uuids.add(u.toString()));
-        players.set(root.toString(), uuids);
-        try {
-            players.save(file);
         }
         catch (IOException e) {
             e.printStackTrace();

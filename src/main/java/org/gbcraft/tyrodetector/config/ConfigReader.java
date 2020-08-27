@@ -8,7 +8,10 @@ import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.bean.VHRule;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 配置文件读取器
@@ -183,34 +186,6 @@ public class ConfigReader {
             plugin.logToFile(k + " " + config.getString(k));
         });
 
-        return res;
-    }
-
-    /**
-     * 从组队配置文件中获取组队列表
-     *
-     * @return 组队列表实例
-     */
-    public static Map<UUID, List<UUID>> getPlayers() {
-        Map<UUID, List<UUID>> res = new HashMap<>();
-        File file = new File(TyroDetector.getPlugin().getDataFolder(), "players.yml");
-        ConfigurationSection section = YamlConfiguration.loadConfiguration(file).getDefaultSection();
-        if (null != section) {
-            Set<String> keys = section.getKeys(false);
-            if (!keys.isEmpty()) {
-                for (String key : keys) {
-                    res.put(UUID.fromString(key), getUUIDList(section.getStringList(key)));
-                }
-            }
-        }
-        return res;
-    }
-
-    private static List<UUID> getUUIDList(List<String> list) {
-        List<UUID> res = new ArrayList<>();
-        for (String s : list) {
-            res.add(UUID.fromString(s));
-        }
         return res;
     }
 
