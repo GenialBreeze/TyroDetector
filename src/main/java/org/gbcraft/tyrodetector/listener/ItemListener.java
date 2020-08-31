@@ -13,7 +13,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.bean.ItemRule;
-import org.gbcraft.tyrodetector.config.LanguageConfig;
+import org.gbcraft.tyrodetector.help.LanguageHelper;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
 
@@ -165,7 +165,7 @@ public class ItemListener implements Listener {
         //世界类型
         contentBuilder.append(player.getWorld().getName());
 
-        contentBuilder.append(LanguageConfig.getName(item.getType()));
+        contentBuilder.append(LanguageHelper.getName(item.getType()));
         contentBuilder.append(" x");
         contentBuilder.append(Math.abs(item.getAmount()));
         contentBuilder.append(" ").append(new SimpleDateFormat("HH:mm").format(new Date()));
