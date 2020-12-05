@@ -8,7 +8,6 @@ import org.bukkit.scheduler.BukkitTask;
 import org.gbcraft.tyrodetector.command.TDCommandExecutor;
 import org.gbcraft.tyrodetector.config.DetectorConfig;
 import org.gbcraft.tyrodetector.config.EmailConfig;
-import org.gbcraft.tyrodetector.config.LanguageConfig;
 import org.gbcraft.tyrodetector.config.WhiteListConfig;
 import org.gbcraft.tyrodetector.email.EmailManager;
 import org.gbcraft.tyrodetector.help.NameUUIDHelper;
@@ -53,13 +52,11 @@ public final class TyroDetector extends JavaPlugin {
         saveDefaultConfig();
         saveResource("email.yml", false);
         saveResource("whitelist.yml", false);
-        saveResource("language.yml", false);
 
         /*实例化配置文件*/
         detectorConfig = new DetectorConfig();
         emailConfig = new EmailConfig();
         whiteListConfig = new WhiteListConfig();
-        LanguageConfig.init();
 
         /*注册玩家游戏时间获取器*/
         TimeHelperManager.registerTimeHelper(new PlanTimeHelper());
@@ -211,7 +208,6 @@ public final class TyroDetector extends JavaPlugin {
         reloadConfig();
         detectorConfig = new DetectorConfig();
         emailConfig = new EmailConfig();
-        LanguageConfig.init();
         cycleTaskInit();
     }
 

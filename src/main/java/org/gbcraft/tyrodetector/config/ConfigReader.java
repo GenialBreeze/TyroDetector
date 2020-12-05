@@ -170,24 +170,4 @@ public class ConfigReader {
         return res;
     }
 
-    /**
-     * 从语言映射文件中读取枚举类型对应的本地化名称
-     *
-     * @return 语言映射表
-     */
-    public static Map<String, String> getLanguage() {
-        Map<String, String> res = new HashMap<>();
-        TyroDetector plugin = TyroDetector.getPlugin();
-        File file = new File(plugin.getDataFolder(), "language.yml");
-        Configuration config = YamlConfiguration.loadConfiguration(file);
-        Set<String> keys = config.getKeys(false);
-        keys.forEach(k -> {
-            res.put(k.toUpperCase(), config.getString(k));
-            plugin.logToFile(k + " " + config.getString(k));
-        });
-
-        return res;
-    }
-
-
 }
