@@ -18,7 +18,6 @@ import org.gbcraft.tyrodetector.listener.*;
 import org.gbcraft.tyrodetector.prediction.PredictContainer;
 import org.gbcraft.tyrodetector.prediction.PredictorManager;
 import org.gbcraft.tyroparty.TyroParty;
-import org.gbcraft.tyroparty.config.PartiesConfig;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -235,10 +234,6 @@ public final class TyroDetector extends JavaPlugin {
         }
 
         return typa != null;
-    }
-
-    public PartiesConfig getPartiesConfig() {
-        return PartiesConfig.getConfig();
     }
 
     public WhiteListConfig getWhiteListConfig() {
