@@ -5,6 +5,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.gbcraft.icesimpleteam.IceSimpleTeam;
 import org.gbcraft.tyrodetector.command.TDCommandExecutor;
 import org.gbcraft.tyrodetector.config.DetectorConfig;
 import org.gbcraft.tyrodetector.config.EmailConfig;
@@ -17,8 +18,6 @@ import org.gbcraft.tyrodetector.help.TyroPlayersManager;
 import org.gbcraft.tyrodetector.listener.*;
 import org.gbcraft.tyrodetector.prediction.PredictContainer;
 import org.gbcraft.tyrodetector.prediction.PredictorManager;
-import org.gbcraft.tyroparty.TyroParty;
-import org.gbcraft.tyroparty.config.PartiesConfig;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,7 +30,7 @@ import java.util.UUID;
 
 public final class TyroDetector extends JavaPlugin {
     private static TyroDetector plugin;
-    private TyroParty typa;
+    private IceSimpleTeam ist;
     private DetectorConfig detectorConfig;
     private EmailConfig emailConfig;
     private WhiteListConfig whiteListConfig;
@@ -46,7 +45,7 @@ public final class TyroDetector extends JavaPlugin {
         plugin = this;
         NameUUIDHelper.init();
 
-        loadPartyModule();
+        loadTeamModule();
 
         /*生成默认配置*/
         saveDefaultConfig();
@@ -94,15 +93,15 @@ public final class TyroDetector extends JavaPlugin {
         this.getLogger().info("TyroDetector初始化完成!");
     }
 
-    private void loadPartyModule() {
+    private void loadTeamModule() {
         try {
-            Class.forName("org.gbcraft.tyroparty.TyroParty");
-            typa = (TyroParty) Bukkit.getPluginManager().getPlugin("TyroParty");
-            this.getLogger().info("TyroParty队伍模块加载完成!");
+            Class.forName("org.gbcraft.icesimpleteam.IceSimpleTeam");
+            ist = (IceSimpleTeam) Bukkit.getPluginManager().getPlugin("IceSimpleTeam");
+            this.getLogger().info("IceSimpleTeam队伍模块加载完成!");
         }
         catch (ClassNotFoundException e) {
-            this.getLogger().info("TyroParty队伍模块未加载!");
-            typa = null;
+            this.getLogger().info("IceSimpleTeam队伍模块未加载!");
+            ist = null;
         }
     }
 
@@ -223,22 +222,18 @@ public final class TyroDetector extends JavaPlugin {
         return emailConfig;
     }
 
-    public boolean isTypaAvailable() {
+    public boolean isIstAvailable() {
         try {
-            Class.forName("org.gbcraft.tyroparty.TyroParty");
-            if (null == typa) {
-                typa = (TyroParty) Bukkit.getPluginManager().getPlugin("TyroParty");
+            Class.forName("org.gbcraft.icesimpleteam.IceSimpleTeam");
+            if (null == ist) {
+                ist = (IceSimpleTeam) Bukkit.getPluginManager().getPlugin("IceSimpleTeam");
             }
         }
         catch (ClassNotFoundException ignore) {
-            typa = null;
+            ist = null;
         }
 
-        return typa != null;
-    }
-
-    public PartiesConfig getPartiesConfig() {
-        return PartiesConfig.getConfig();
+        return ist != null;
     }
 
     public WhiteListConfig getWhiteListConfig() {

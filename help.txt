@@ -1,0 +1,13 @@
+命令权限
+tyro.bind 使用/tyro bind <leader> <member>
+tyro.config /tyro config
+tyro.reload /tyro reload
+tyro.white /tyro white
+tyro.command.op 全部的命令提示
+
+命令:
+/tyro bind <member> 发起绑定邀请| /tyro bind <leader> <member> 直接绑定,需要权限
+/tyro yes 同意绑定邀请
+/tyro config 配置编写辅助用GUI
+/tyro reload 重载
+/tyro white 白名单操作-
