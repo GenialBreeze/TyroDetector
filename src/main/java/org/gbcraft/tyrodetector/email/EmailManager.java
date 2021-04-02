@@ -2,10 +2,9 @@ package org.gbcraft.tyrodetector.email;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.gbcraft.icesimpleteam.party.TeamManager;
 import org.gbcraft.tyrodetector.TyroDetector;
 import org.gbcraft.tyrodetector.help.TimeHelperManager;
-import org.gbcraft.tyroparty.party.Partner;
-import org.gbcraft.tyroparty.party.PartyManager;
 
 import java.util.List;
 import java.util.Map;
@@ -89,8 +88,8 @@ public class EmailManager {
     private void fillMsg(HumanEntity player, EmailInfo emailInfo, String format) {
         List<String> partyInfo = null;
 
-        if (plugin.isTypaAvailable()) {
-            partyInfo = PartyManager.partyInfo(new Partner(player.getUniqueId()));
+        if (plugin.isIstAvailable()) {
+            partyInfo = TeamManager.teamInfo(player.getName(), player.getUniqueId());
         }
 
         String leader = partyInfo == null ? "未找到" : partyInfo.get(0);
@@ -112,8 +111,8 @@ public class EmailManager {
             String format = String.format("%s - %d 小时\n", key.getName(), TimeHelperManager.getPlayHours(key.getName()));
             content.append(format);
 
-            if (plugin.isTypaAvailable()) {
-                List<String> partyInfo = PartyManager.partyInfo(new Partner(key.getUniqueId()));
+            if (plugin.isIstAvailable()) {
+                List<String> partyInfo = TeamManager.teamInfo(key.getName(), key.getUniqueId());
                 if (null != partyInfo && partyInfo.size() > 1) {
                     content.append("队伍信息: \n队长: " + partyInfo.get(0));
                     content.append("\n队员: " + String.join(", ", partyInfo.subList(1, partyInfo.size() - 1)));
