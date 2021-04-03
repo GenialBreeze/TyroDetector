@@ -1,6 +1,7 @@
 package org.gbcraft.tyrodetector.prediction;
 
-import cn.mcres.luckyfish.plugincommons.utils.MaterialUtil;
+
+import moe.orangemc.luckyfish.plugincommons.item.MaterialUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
