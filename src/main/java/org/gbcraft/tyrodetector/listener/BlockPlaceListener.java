@@ -8,9 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.gbcraft.tyrodetector.TyroDetector;
-import org.gbcraft.tyrodetector.help.LanguageHelper;
 import org.gbcraft.tyrodetector.email.EmailInfo;
 import org.gbcraft.tyrodetector.email.EmailManager;
+import org.gbcraft.tyrodetector.help.LanguageHelper;
 import org.gbcraft.tyrodetector.prediction.PredictorManager;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +33,11 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
         HumanEntity player = event.getPlayer();
         Block block = event.getBlockPlaced();
 
+        // TNT相关风险预测
+        if (block.getType() == Material.TNT) {
+            PredictorManager.tntPredict(player, block, event);
+        }
+
         // 判定不在监测范围的玩家
         if (!plugin.getTyroPlayers().containsKey(event.getPlayer().getUniqueId())) {
             return;
@@ -43,11 +48,6 @@ public class BlockPlaceListener extends ContainerListener<Block, Integer> implem
             plugin.logToFile("[DEBUG]发现需要监测的方块被放置 - " + player.getName());
 
             joinContainers(player, block, limit);
-        }
-
-        // TNT相关风险预测
-        if (block.getType() == Material.TNT) {
-            PredictorManager.tntPredict(player, block, event);
         }
     }
 
